@@ -142,7 +142,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
         return list
     } else {
         val Middle = (list.sum() / list.size)
-        for (i in 0..(list.size - 1)){
+        for (i in 0 until list.size){
             list[i] -= Middle
         }
         return list
@@ -158,7 +158,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  */
 fun times(a: List<Double>, b: List<Double>): Double {
     var C = 0.0
-    for (i in 0..(a.size - 1)){
+    for (i in 0 until a.size){
         C += (a[i] * b[i])
     }
     return C
@@ -174,7 +174,7 @@ fun times(a: List<Double>, b: List<Double>): Double {
  */
 fun polynom(p: List<Double>, x: Double): Double {
     var P = 0.0
-    for (i in 0..(p.size - 1)){
+    for (i in 0 until p.size){
         P += p[i] * Math.pow(x,i.toDouble())
     }
     return P
@@ -194,7 +194,7 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
     if (list.isEmpty()){
         return list
     } else {
-        for (i in 1..(list.size - 1)){
+        for (i in 1 until list.size){
             list[i] += list[i-1]
         }
         return list
