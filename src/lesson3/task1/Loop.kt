@@ -65,7 +65,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
 
     var result1 = 1
-    var num = n
+    var num = Math.abs(n)
 
     while (num >= 10){
         num /= 10
@@ -156,7 +156,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
             Num2 %= Num1
         }
     }
-    if (Num1 == 1) {
+    if (Num1 == 1 || Num2 == 1) {
         return true
     }
     return false
@@ -186,19 +186,8 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double {
-    var Eps = eps
-    var sin = x
-    var count = 3.0
-    var chet = -1
-    while (Eps < 1) {
-        sin +=  chet * (Math.pow(x,count)/ factorial(count.toInt()))
-        Eps *= 10
-        count += 2.0
-        chet *= -1
-    }
-    return sin
-}
+fun sin(x: Double, eps: Double): Double = TODO()
+
 
 /**
  * Средняя
@@ -289,11 +278,9 @@ fun squareSequenceDigit(n: Int): Int {
         result = count * count
         Number2 += Sum
     }
-    if (Number2 > Number1){
-        while (Number2 > Number1){
-            result /= 10
-            Number2--
-        }
+    while (Number2 > Number1){
+        result /= 10
+        Number2--
     }
     if (Number2 == Number1) {
         result %= 10
@@ -325,12 +312,12 @@ fun fibSequenceDigit(n: Int): Int {
         result = fib(count)
         Number2 += Sum
     }
-    if (Number2 > Number1){
-        while (Number2 > Number1){
-            result /= 10
-            Number2--
-        }
+
+    while (Number2 > Number1){
+        result /= 10
+        Number2--
     }
+
     if (Number2 == Number1) {
         result %= 10
     }

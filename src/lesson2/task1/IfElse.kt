@@ -46,7 +46,7 @@ fun ageDescription(age: Int): String {
             if ((age % 10 in 6..9) || ((age % 10 == 0))) {
                 return "$age лет"
             } else
-                return "$age год"
+                return "$age года"
         } else
             return "$age лет"
     }
@@ -152,7 +152,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val sqrB = sqr(b)
     val sqrC = sqr(c)
 
-    if ((a > b + c) || (b > a + c) || (a > b + c)) {
+    if ((a > b + c) || (b > a + c) || (c > b + a)) {
         return -1
     }
     else {
