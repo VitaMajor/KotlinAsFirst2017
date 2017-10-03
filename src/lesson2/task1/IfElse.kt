@@ -40,10 +40,10 @@ fun ageDescription(age: Int): String {
             if ((age % 10) == 1) {
                 return "$age год"
             }
-            if (2 >= (age % 10) && (age % 10) <= 5) {
+            if (age % 10 in 2..4) {
                 return "$age года"
             }
-            if ((age % 10 in 6..9) || ((age % 10 == 0))) {
+            if ((age % 10 in 5..9) || ((age % 10 == 0))) {
                 return "$age лет"
             } else
                 return "$age года"
@@ -156,10 +156,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         return -1
     }
     else {
-        if ((sqrC == sqrB + sqrC) || (sqrB == sqrA + sqrC) || (sqrA == sqrB + sqrC)) {
+        if ((sqrC == sqrB + sqrA) || (sqrB == sqrA + sqrC) || (sqrA == sqrB + sqrC)) {
             return 1
         }
-        else if (((sqrC < sqrB + sqrC) && (c > a) && (c > b)) || ((sqrB < sqrA + sqrC) && (b > a) && (b > c)) || ((sqrA < sqrB + sqrC) && (a > c) && (a > b))){
+        else if (((sqrC < sqrB + sqrA) && (c > a) && (c > b)) || ((sqrB < sqrA + sqrC) && (b > a) && (b > c)) || ((sqrA < sqrB + sqrC) && (a > c) && (a > b))){
             return 2
         }
         else {
