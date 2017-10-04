@@ -84,9 +84,7 @@ fun fib(n: Int): Int {
     if (n > 2 ) {
         return (fib((n-1)) + fib ((n-2)))
     }
-    else {
-        return 1
-    }
+    return 1
 }
 
 /**

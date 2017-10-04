@@ -45,7 +45,7 @@ fun ageDescription(age: Int): String {
             }
             if ((age % 10 in 5..9) || ((age % 10 == 0))) {
                 return "$age лет"
-            } else
+            }
                 return "$age года"
         } else
             return "$age лет"
@@ -72,16 +72,12 @@ fun timeForHalfWay(t1: Double, v1: Double,
     if (halfWay < s1) {
         return (halfWay / v1)
     }
-    else {
-        if (halfWay in s1..(s1+s2)) {
-            return (t1 + (halfWay - s1) / v2)
-        }
-        else {
-            return (t1 + t2 + (halfWay - s1 - s2) / v3)
-        }
+    if (halfWay in s1..(s1+s2)) {
+        return (t1 + (halfWay - s1) / v2)
     }
-
+    return (t1 + t2 + (halfWay - s1 - s2) / v3)
 }
+
 
 /**
  * Простая
@@ -98,15 +94,13 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
     if (((kingX == rookX1) || (kingY == rookY1)) && ((kingX == rookX2) || (kingY == rookY2))){
         return 3
     }
-    else if ((kingX == rookX1) || (kingY == rookY1)) {
+    if ((kingX == rookX1) || (kingY == rookY1)) {
         return 1
     }
-    else if ((kingX == rookX2) || (kingY == rookY2)) {
+    if ((kingX == rookX2) || (kingY == rookY2)) {
         return 2
     }
-    else {
-        return 0
-    }
+    return 0
 }
 
 /**
@@ -125,15 +119,13 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
     if (((kingX == rookX) || (kingY == rookY) ) && ((Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)))){
         return 3
     }
-    else if ((kingX == rookX) || (kingY == rookY)) {
+    if ((kingX == rookX) || (kingY == rookY)) {
         return 1
     }
-    else if ((Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY))) {
+    if ((Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY))) {
         return 2
     }
-    else {
-        return 0
-    }
+    return 0
 }
 
 
@@ -155,18 +147,13 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     if ((a > b + c) || (b > a + c) || (c > b + a)) {
         return -1
     }
-    else {
-        if ((sqrC == sqrB + sqrA) || (sqrB == sqrA + sqrC) || (sqrA == sqrB + sqrC)) {
-            return 1
-        }
-        else if (((sqrC < sqrB + sqrA) && (c > a) && (c > b)) || ((sqrB < sqrA + sqrC) && (b > a) && (b > c)) || ((sqrA < sqrB + sqrC) && (a > c) && (a > b))){
-            return 2
-        }
-        else {
-            return 0
-        }
-
+    if ((sqrC == sqrB + sqrA) || (sqrB == sqrA + sqrC) || (sqrA == sqrB + sqrC)) {
+        return 1
     }
+    if (((sqrC < sqrB + sqrA) && (c > a) && (c > b)) || ((sqrB < sqrA + sqrC) && (b > a) && (b > c)) || ((sqrA < sqrB + sqrC) && (a > c) && (a > b))){
+        return 2
+        }
+        return 0
 }
 
 /**
@@ -183,26 +170,21 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
             if (a > d) {
                 return -1
             }
-            else {
-                return (d - a)
-            }
+            return (d - a)
         }
-        else if ((a <= c) && (b <= d))
-            if (b < c){
+        if ((a <= c) && (b <= d)) {
+            if (b < c) {
                 return -1
             }
-            else {
-                return (b - c)
-            }
-        else if ((a >= c) && (b <= d)) {
+            return (b - c)
+        }
+        if ((a >= c) && (b <= d)) {
             return (b - a)
         }
-        else if ((a <= c) && (b >= d)){
+        if ((a <= c) && (b >= d)){
             return (d - c)
         }
-        else {
             return -1
-        }
     }
     else {
         return -1

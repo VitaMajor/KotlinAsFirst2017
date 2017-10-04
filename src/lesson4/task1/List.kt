@@ -124,9 +124,9 @@ fun abs(v: List<Double>): Double {
 fun mean(list: List<Double>): Double {
     if (list.isEmpty()) {
         return 0.0
-    } else {
-        return (list.sum() / list.size)
     }
+    return (list.sum() / list.size)
+
 }
 
 /**
@@ -140,14 +140,14 @@ fun mean(list: List<Double>): Double {
 fun center(list: MutableList<Double>): MutableList<Double> {
     if (list.isEmpty()){
         return list
-    } else {
-        val Middle = (list.sum() / list.size)
-        for (i in 0 until list.size){
-            list[i] -= Middle
-        }
-        return list
     }
+    val Middle = (list.sum() / list.size)
+    for (i in 0 until list.size){
+        list[i] -= Middle
+    }
+    return list
 }
+
 
 /**
  * Средняя
@@ -193,12 +193,12 @@ fun polynom(p: List<Double>, x: Double): Double {
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
     if (list.isEmpty()){
         return list
-    } else {
-        for (i in 1 until list.size){
-            list[i] += list[i-1]
-        }
-        return list
     }
+    for (i in 1 until list.size){
+        list[i] += list[i-1]
+    }
+    return list
+
 }
 
 /**
