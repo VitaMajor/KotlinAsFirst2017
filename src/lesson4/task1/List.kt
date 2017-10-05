@@ -373,8 +373,8 @@ fun roman(n: Int): String {
 fun russian(n: Int): String {
     val Numbers:List<Int> = listOf(900,800,700,600,500,400,300,200,100,90,80,70,60,50,40,30,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1)
     val RusNum:List<String> = listOf("девятьсот","восемьсот","семьсот","шестьсот","пятьсот","четыреста","триста","двести","сто","девяносто","восемьдесят","семьдесят","шестьдесят","пятьдесят","сорок","тридцать","двадцать","девятнадцать","восемнадцать","семнадцать","шестнадцать","пятнадцать","четырнадцать","тринадцать","двенадцать","одиннадцать","десять","девять","восемь","семь","шесть","пять","четыре","три","два","один")
-    var NumBig = n/1000
-    var NumSmall = n%1000
+    var NumBig = n / 1000
+    var NumSmall = n % 1000
     var count = 0
     val Result = mutableListOf<String>()
     if (n >= 2000) {
@@ -387,13 +387,13 @@ fun russian(n: Int): String {
                 if (Numbers[count] == 1){
                     Result.add ("одна")
                 }
-                else {
+                if (Numbers[count] != 1 && Numbers[count] != 2) {
                     Result.add(RusNum[count])
                 }
             }
             count++
         }
-        NumBig = n/1000
+        NumBig = n / 1000
         if (((NumBig % 100) < 10) || ((NumBig % 100) > 20)) {
             if (NumBig % 10 in 2..4) {
                 Result.add("тысячи")
