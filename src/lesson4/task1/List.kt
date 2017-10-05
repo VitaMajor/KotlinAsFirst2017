@@ -383,7 +383,11 @@ fun russian(n: Int): String {
                 NumBig -= Numbers[count]
                 if (Numbers[count] == 2){
                     Result.add ("две")
-                } else {
+                }
+                if (Numbers[count] == 1){
+                    Result.add ("одна")
+                }
+                else {
                     Result.add(RusNum[count])
                 }
             }
