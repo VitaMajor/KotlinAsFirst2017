@@ -213,7 +213,7 @@ fun factorize(n: Int): List<Int> {
     var Num = n
     val result = mutableListOf<Int>()
     while (Num > 1) {
-        for (i in 2..(n/2)) {
+        for (i in 2..n) {
             while (Num % i == 0) {
                 Num /= i
                 result.add(i)
@@ -303,9 +303,8 @@ fun convertToString(n: Int, base: Int): String {
 fun decimal(digits: List<Int>, base: Int): Int {
     var result = 0
     val Numbers = digits.reversed()
-    val Base = base
     for (i in (digits.size - 1) downTo 0) {
-            result += Numbers[i] * Math.pow(Base.toDouble(), i.toDouble()).toInt()
+            result += Numbers[i] * Math.pow(base.toDouble(), i.toDouble()).toInt()
     }
     return result
 }
