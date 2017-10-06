@@ -116,7 +116,7 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
-    if (((kingX == rookX) || (kingY == rookY) ) && ((Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)))){
+    if (((kingX == rookX) || (kingY == rookY)) && ((Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)))){
         return 3
     }
     if ((kingX == rookX) || (kingY == rookY)) {

@@ -316,12 +316,10 @@ fun fibSequenceDigit(n: Int): Int {
         result = fib(count)
         Number2 += Sum
     }
-
     while (Number2 > Number1){
         result /= 10
         Number2--
     }
-
     if (Number2 == Number1) {
         result %= 10
     }
