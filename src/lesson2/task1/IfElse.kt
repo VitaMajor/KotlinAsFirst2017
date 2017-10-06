@@ -150,10 +150,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     if ((sqrC == sqrB + sqrA) || (sqrB == sqrA + sqrC) || (sqrA == sqrB + sqrC)) {
         return 1
     }
-    if (((sqrC < sqrB + sqrA) && (c > a) && (c > b)) || ((sqrB < sqrA + sqrC) && (b > a) && (b > c)) || ((sqrA < sqrB + sqrC) && (a > c) && (a > b))){
-        return 2
-        }
+    if (((sqrC <= sqrB + sqrA) && (c >= a) && (c >= b)) || ((sqrB <= sqrA + sqrC) && (b >= a) && (b >= c)) || ((sqrA <= sqrB + sqrC) && (a >= c) && (a >= b))){
         return 0
+        }
+    return 2
 }
 
 /**

@@ -81,10 +81,17 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    if (n > 2 ) {
-        return (fib((n-1)) + fib ((n-2)))
+    var fibFirst = 1
+    var fibSecond = 1
+    var result = 1
+    var i = 2
+    while (i < n) {
+        result = fibFirst + fibSecond
+        fibFirst = fibSecond
+        fibSecond = result
+        i++
     }
-    return 1
+    return result
 }
 
 /**
@@ -185,7 +192,6 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun sin(x: Double, eps: Double): Double = TODO()
-
 
 /**
  * Средняя
