@@ -66,7 +66,19 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val Month = listOf("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
+    val Number = listOf(1,2,3,4,5,6,7,8,9,10,11,12)
+    val part = str.split(" ")
+    if (part.size == 3) {
+        for (i in 0 until Month.size) {
+            if (part[1] == Month[i]) {
+                return String.format("%02d.%02d.%02d", part[0].toInt(), Number[i], part[2].toInt())
+            }
+        }
+    }
+    return ""
+}
 /**
  * Средняя
  *
@@ -74,8 +86,19 @@ fun dateStrToDigit(str: String): String = TODO()
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String = TODO()
-
+fun dateDigitToStr(digital: String): String {
+    val Month = listOf("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
+    val Number = listOf("01","02","03","04","05","06","07","08","09","10","11","12")
+    val part = digital.split(".")
+    if ((part.size == 3)) {
+        for (i in 0 until Month.size) {
+            if (part[1] == Number[i]) {
+                return String.format("%d %s %s", part[0].toInt(), Month[i], part[2])
+            }
+        }
+    }
+    return ""
+}
 /**
  * Средняя
  *
@@ -88,7 +111,37 @@ fun dateDigitToStr(digital: String): String = TODO()
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    val part = phone.split("-","(",")")
+    var result = ""
+    try {
+        if (phone.first() == '+') {
+            result += part[0].trim()
+            for (i in 1 until part.size) {
+                if (part[i] == "") {
+                    continue
+                }
+                if (part[i].trim().toInt() >= 0) {
+                    result += part[i].trim().toInt()
+                }
+            }
+        } else {
+            for (i in 0 until part.size) {
+                if (part[i] == "") {
+                    continue
+                }
+                if (part[i].trim().toInt() >= 0) {
+                    result += part[i].trim().toInt()
+                }
+            }
+        }
+        return result
+    }
+    catch (e: NumberFormatException) {
+        return ""
+    }
+
+}
 
 /**
  * Средняя
@@ -100,7 +153,27 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val part = jumps.split("-","%"," ")
+    var result = -1
+    try {
+        for (i in 0 until part.size) {
+            if (part[i].trim() == "") {
+                continue
+            }
+            if (part[i].trim().toInt() >= 0) {
+                if (part[i].trim().toInt() >= result) {
+                    result = part[i].trim().toInt()
+                }
+            }
+        }
+            return result
+    }
+    catch (e: NumberFormatException) {
+        return -1
+    }
+
+}
 
 /**
  * Сложная
@@ -112,7 +185,30 @@ fun bestLongJump(jumps: String): Int = TODO()
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val part = jumps.split("-","%"," ")
+    var result = -1
+    try {
+        for (i in 0 until part.size) {
+            if (part[i].trim() == "") {
+                continue
+            }
+            if (part[i].trim() == "+") {
+                continue
+            }
+            if ((part[i].trim().toInt() >= 0 ) && (part[i+1].trim() == "+")) {
+                if (part[i].trim().toInt() >= result) {
+                    result = part[i].trim().toInt()
+                }
+            }
+        }
+        return result
+    }
+    catch (e: NumberFormatException) {
+        return -1
+    }
+
+}
 
 /**
  * Сложная
@@ -123,7 +219,29 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    val part = expression.split(" ")
+    var result = part[0].toInt()
+    try {
+        if (part.size == 1) {
+            return part[0].toInt()
+        }
+        for (i in 2 until part.size) {
+            if ((part[i].trim() == "+") || (part[i].trim() == "-")) {
+                continue
+            }
+            when {
+                (part[i].trim().toInt() >= 0 ) && (part[i-1].trim() == "+") -> result += part[i].trim().toInt()
+                (part[i].trim().toInt() >= 0 ) && (part[i-1].trim() == "-") -> result -= part[i].trim().toInt()
+            }
+        }
+        return result
+    }
+    catch (e: IllegalArgumentException) {
+        return 0
+    }
+
+}
 
 /**
  * Сложная
@@ -134,7 +252,19 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val parts = str.split(" ")
+    var index = parts[0].length
+    var result = -1
+    for (i in 1 until parts.size) {
+        if (parts[i].trim().toLowerCase() == parts[i-1].trim().toLowerCase()) {
+            result = index - parts[i].length
+            break
+        }
+        index += parts[i].length + 1
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -147,7 +277,24 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val parts = description.split(";")
+    var result = ""
+    var resultPrice = 0.0
+    try {
+        for (i in 0 until parts.size) {
+            val NumPr = parts[i].trim().split(" ")
+            if (NumPr[1].toDouble() >= resultPrice) {
+                resultPrice = NumPr[1].toDouble()
+                result = NumPr[0].trim()
+            }
+        }
+        return result
+    }
+    catch (e: IndexOutOfBoundsException) {
+        return ""
+    }
+}
 
 /**
  * Сложная
@@ -160,7 +307,31 @@ fun mostExpensive(description: String): String = TODO()
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int {
+    val Numbers:List<Int> = listOf(1000,900,500,400,100,90,50,40,10,9,5,4,1)
+    val RimNum:List<String> = listOf("M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I")
+    val parts = roman.split("")
+    var result = 0
+    for (i in 0 until parts.size){
+        for (n in 0 until RimNum.size) {
+            if (parts[i].trim() == RimNum[n]) {
+                if (parts[i] == "C" || parts[i] == "X" || parts[i] == "I"){
+                    when {
+                        parts[i] + parts[i + 1] == RimNum[n - 1] -> result += Numbers[n - 1] - Numbers[n - 2]
+                        parts[i] + parts[i + 1] == RimNum[n - 3] -> result += Numbers[n - 3] - Numbers [n - 4]
+                        else -> result += Numbers[n]
+                    }
+                } else {
+                    result += Numbers[n]
+                }
+            }
+        }
+    }
+    if (result == 0){
+        return -1
+    }
+    return result
+}
 
 /**
  * Очень сложная
@@ -187,7 +358,7 @@ fun fromRoman(roman: String): Int = TODO()
  * значении под датчиком равном 0) и пробелы.
  *
  * Вернуть список размера cells, содержащий элементы ячеек устройства после завершения выполнения последовательности.
- * Например, для 10 ячеек и командной строки +>+>+>+>+ результат должен быть 0,0,0,0,0,1,1,1,1,1
+ * Например, для 10 ячеек и командной с троки +>+>+>+>+ результат должен быть 0,0,0,0,0,1,1,1,1,1
  *
  * Все прочие символы следует считать ошибочными и формировать исключение IllegalArgumentException.
  * То же исключение формируется, если у символов [ ] не оказывается пары.

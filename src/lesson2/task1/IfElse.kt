@@ -37,17 +37,14 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
 fun ageDescription(age: Int): String {
     if (age in 1..199) {
         if (((age % 100) < 10) || ((age % 100) > 20)) {
-            if ((age % 10) == 1) {
-                return "$age год"
+            when {
+                (age % 10) == 1 -> return "$age год"
+                (age % 10 in 2..4) -> return "$age года"
+                (age % 10 in 5..9) || ((age % 10 == 0)) -> return "$age лет"
             }
-            if (age % 10 in 2..4) {
-                return "$age года"
-            }
-            if ((age % 10 in 5..9) || ((age % 10 == 0))) {
-                return "$age лет"
-            }
-                return "$age года"
-        } else
+            return "$age года"
+        }
+        else
             return "$age лет"
     }
     else
@@ -91,14 +88,10 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
-    if (((kingX == rookX1) || (kingY == rookY1)) && ((kingX == rookX2) || (kingY == rookY2))){
-        return 3
-    }
-    if ((kingX == rookX1) || (kingY == rookY1)) {
-        return 1
-    }
-    if ((kingX == rookX2) || (kingY == rookY2)) {
-        return 2
+    when {
+        ((kingX == rookX1) || (kingY == rookY1)) && ((kingX == rookX2) || (kingY == rookY2)) -> return 3
+        (kingX == rookX1) || (kingY == rookY1)                                               -> return 1
+        (kingX == rookX2) || (kingY == rookY2)                                               -> return 2
     }
     return 0
 }
@@ -116,14 +109,10 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
-    if (((kingX == rookX) || (kingY == rookY)) && ((Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)))){
-        return 3
-    }
-    if ((kingX == rookX) || (kingY == rookY)) {
-        return 1
-    }
-    if ((Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY))) {
-        return 2
+    when {
+        ((kingX == rookX) || (kingY == rookY)) && (Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)) -> return 3
+        (kingX == rookX) || (kingY == rookY)                                                               -> return 1
+        Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)                                             -> return 2
     }
     return 0
 }
@@ -144,15 +133,11 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val sqrB = sqr(b)
     val sqrC = sqr(c)
 
-    if ((a > b + c) || (b > a + c) || (c > b + a)) {
-        return -1
+    when {
+        ((a > b + c) || (b > a + c) || (c > b + a)) -> return -1
+        ((sqrC == sqrB + sqrA) || (sqrB == sqrA + sqrC) || (sqrA == sqrB + sqrC)) -> return 1
+        (((sqrC <= sqrB + sqrA) && (c >= a) && (c >= b)) || ((sqrB <= sqrA + sqrC) && (b >= a) && (b >= c)) || ((sqrA <= sqrB + sqrC) && (a >= c) && (a >= b))) -> return 0
     }
-    if ((sqrC == sqrB + sqrA) || (sqrB == sqrA + sqrC) || (sqrA == sqrB + sqrC)) {
-        return 1
-    }
-    if (((sqrC <= sqrB + sqrA) && (c >= a) && (c >= b)) || ((sqrB <= sqrA + sqrC) && (b >= a) && (b >= c)) || ((sqrA <= sqrB + sqrC) && (a >= c) && (a >= b))){
-        return 0
-        }
     return 2
 }
 

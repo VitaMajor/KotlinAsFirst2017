@@ -371,8 +371,8 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    val Numbers:List<Int> = listOf(900,800,700,600,500,400,300,200,100,90,80,70,60,50,40,30,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1)
-    val RusNum:List<String> = listOf("девятьсот","восемьсот","семьсот","шестьсот","пятьсот","четыреста","триста","двести","сто","девяносто","восемьдесят","семьдесят","шестьдесят","пятьдесят","сорок","тридцать","двадцать","девятнадцать","восемнадцать","семнадцать","шестнадцать","пятнадцать","четырнадцать","тринадцать","двенадцать","одиннадцать","десять","девять","восемь","семь","шесть","пять","четыре","три","два","один")
+    val Numbers: List<Int> = listOf(900, 800, 700, 600, 500, 400, 300, 200, 100, 90, 80, 70, 60, 50, 40, 30, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
+    val RusNum: List<String> = listOf("девятьсот", "восемьсот", "семьсот", "шестьсот", "пятьсот", "четыреста", "триста", "двести", "сто", "девяносто", "восемьдесят", "семьдесят", "шестьдесят", "пятьдесят", "сорок", "тридцать", "двадцать", "девятнадцать", "восемнадцать", "семнадцать", "шестнадцать", "пятнадцать", "четырнадцать", "тринадцать", "двенадцать", "одиннадцать", "десять", "девять", "восемь", "семь", "шесть", "пять", "четыре", "три", "два", "один")
     var NumBig = n / 1000
     var NumSmall = n % 1000
     var count = 0
@@ -381,43 +381,35 @@ fun russian(n: Int): String {
         while (NumBig > 0) {
             while (Numbers[count] <= NumBig) {
                 NumBig -= Numbers[count]
-                if (Numbers[count] == 2){
-                    Result.add ("две")
-                }
-                if (Numbers[count] == 1){
-                    Result.add ("одна")
-                }
-                if (Numbers[count] != 1 && Numbers[count] != 2) {
-                    Result.add(RusNum[count])
+                when {
+                    Numbers[count] == 2 -> Result.add("две")
+                    Numbers[count] == 1 -> Result.add("одна")
+                    else                -> Result.add(RusNum[count])
                 }
             }
             count++
         }
         NumBig = n / 1000
         if (((NumBig % 100) < 10) || ((NumBig % 100) > 20)) {
-            if (NumBig % 10 in 2..4) {
-                Result.add("тысячи")
-            }
-            if ((NumBig % 10 in 5..9) || ((NumBig % 10 == 0))) {
-                Result.add("тысяч")
-            }
-            if (NumBig % 10 == 1){
-                Result.add("тысяча")
+            when {
+                (NumBig % 10 in 2..4)                         -> Result.add("тысячи")
+                (NumBig % 10 in 5..9) || ((NumBig % 10 == 0)) -> Result.add("тысяч")
+                (NumBig % 10 == 1)                            -> Result.add("тысяча")
             }
         } else {
             Result.add("тысяч")
         }
     }
-    if (n in 1000..1999) {
-        Result.add("тысяча")
-    }
-    count = 0
-    while (NumSmall > 0) {
-        while (Numbers[count] <= NumSmall) {
-            NumSmall -= Numbers[count]
-            Result.add(RusNum[count])
+        if (n in 1000..1999) {
+            Result.add("тысяча")
         }
-        count++
+        count = 0
+        while (NumSmall > 0) {
+            while (Numbers[count] <= NumSmall) {
+                NumSmall -= Numbers[count]
+                Result.add(RusNum[count])
+            }
+            count++
+        }
+        return Result.joinToString(separator = " ")
     }
-    return Result.joinToString (separator = " ")
-}
