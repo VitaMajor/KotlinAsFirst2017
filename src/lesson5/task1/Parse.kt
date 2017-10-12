@@ -67,13 +67,14 @@ fun main(args: Array<String>) {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateStrToDigit(str: String): String {
-    val Month = listOf("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
-    val Number = listOf(1,2,3,4,5,6,7,8,9,10,11,12)
+    val month = listOf("января","февраля","марта","апреля","мая","июня",
+            "июля","августа","сентября","октября","ноября","декабря")
+    val number = listOf(1,2,3,4,5,6,7,8,9,10,11,12)
     val part = str.split(" ")
     if (part.size == 3) {
-        for (i in 0 until Month.size) {
-            if (part[1] == Month[i]) {
-                return String.format("%02d.%02d.%02d", part[0].toInt(), Number[i], part[2].toInt())
+        for (i in 0 until month.size) {
+            if (part[1] == month[i]) {
+                return String.format("%02d.%02d.%02d", part[0].toInt(), number[i], part[2].toInt())
             }
         }
     }
@@ -87,13 +88,14 @@ fun dateStrToDigit(str: String): String {
  * При неверном формате входной строки вернуть пустую строку
  */
 fun dateDigitToStr(digital: String): String {
-    val Month = listOf("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
-    val Number = listOf("01","02","03","04","05","06","07","08","09","10","11","12")
+    val month = listOf("января","февраля","марта","апреля","мая","июня","июля",
+            "августа","сентября","октября","ноября","декабря")
+    val number = listOf("01","02","03","04","05","06","07","08","09","10","11","12")
     val part = digital.split(".")
     if ((part.size == 3)) {
-        for (i in 0 until Month.size) {
-            if (part[1] == Number[i]) {
-                return String.format("%d %s %s", part[0].toInt(), Month[i], part[2])
+        for (i in 0 until month.size) {
+            if (part[1] == number[i]) {
+                return String.format("%d %s %02d", part[0].toInt(), month[i], part[2].toInt())
             }
         }
     }
@@ -114,6 +116,9 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     val part = phone.split("-","(",")")
     var result = ""
+    if (part.isEmpty()){
+        return result
+    }
     try {
         if (phone.first() == '+') {
             result += part[0].trim()
@@ -186,7 +191,7 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    val part = jumps.split("-","%"," ")
+    val part = jumps.split("-"," ")
     var result = -1
     try {
         for (i in 0 until part.size) {
@@ -194,6 +199,9 @@ fun bestHighJump(jumps: String): Int {
                 continue
             }
             if (part[i].trim() == "+") {
+                continue
+            }
+            if (part[i].trim().first() == '%') {
                 continue
             }
             if ((part[i].trim().toInt() >= 0 ) && (part[i+1].trim() == "+")) {
@@ -237,7 +245,7 @@ fun plusMinus(expression: String): Int {
         }
         return result
     }
-    catch (e: IllegalArgumentException) {
+    catch (e: NumberFormatException) {
         return 0
     }
 
@@ -283,10 +291,10 @@ fun mostExpensive(description: String): String {
     var resultPrice = 0.0
     try {
         for (i in 0 until parts.size) {
-            val NumPr = parts[i].trim().split(" ")
-            if (NumPr[1].toDouble() >= resultPrice) {
-                resultPrice = NumPr[1].toDouble()
-                result = NumPr[0].trim()
+            val numPr = parts[i].trim().split(" ")
+            if (numPr[1].toDouble() >= resultPrice) {
+                resultPrice = numPr[1].toDouble()
+                result = numPr[0].trim()
             }
         }
         return result
@@ -308,23 +316,28 @@ fun mostExpensive(description: String): String {
  * Вернуть -1, если roman не является корректным римским числом
  */
 fun fromRoman(roman: String): Int {
-    val Numbers:List<Int> = listOf(1000,900,500,400,100,90,50,40,10,9,5,4,1)
-    val RimNum:List<String> = listOf("M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I")
+    val numbers:List<Int> = listOf(1000,900,500,400,100,90,50,40,10,9,5,4,1)
+    val rimNum:List<String> = listOf("M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I")
     val parts = roman.split("")
     var result = 0
     for (i in 0 until parts.size){
-        for (n in 0 until RimNum.size) {
-            if (parts[i].trim() == RimNum[n]) {
-                if (parts[i] == "C" || parts[i] == "X" || parts[i] == "I"){
-                    when {
-                        parts[i] + parts[i + 1] == RimNum[n - 1] -> result += Numbers[n - 1] - Numbers[n - 2]
-                        parts[i] + parts[i + 1] == RimNum[n - 3] -> result += Numbers[n - 3] - Numbers [n - 4]
-                        else -> result += Numbers[n]
+        if (parts[i].trim() in rimNum.toString()) {
+            for (n in 0 until rimNum.size) {
+                if (parts[i].trim() == rimNum[n]) {
+                    if (parts[i] == "C" || parts[i] == "X" || parts[i] == "I") {
+                        when {
+                            parts[i] + parts[i + 1] == rimNum[n - 1] -> result += numbers[n - 1] - numbers[n - 2]
+                            parts[i] + parts[i + 1] == rimNum[n - 3] -> result += numbers[n - 3] - numbers[n - 4]
+                            else -> result += numbers[n]
+                        }
+                    } else {
+                        result += numbers[n]
                     }
-                } else {
-                    result += Numbers[n]
                 }
+
             }
+        } else {
+            return -1
         }
     }
     if (result == 0){

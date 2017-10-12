@@ -102,17 +102,17 @@ fun fib(n: Int): Int {
  */
 fun lcm(m: Int, n: Int): Int {
     val prod = m * n
-    var Number1 = m
-    var Number2 = n
+    var number1 = m
+    var number2 = n
 
-    while(Number1 != Number2) {
-        if (Number1 > Number2){
-            Number1 -= Number2
+    while(number1 != number2) {
+        if (number1 > number2){
+            number1 -= number2
         } else {
-            Number2 -= Number1
+            number2 -= number1
         }
     }
-    return (prod / Number1)
+    return (prod / number1)
 }
 
 /**
@@ -151,21 +151,7 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    var Num1 = m
-    var Num2 = n
-    while ((Num1 != 0) && (Num2 != 0)){
-        if (Num1 > Num2){
-            Num1 %= Num2
-        } else {
-            Num2 %= Num1
-        }
-    }
-    if (Num1 == 1 || Num2 == 1) {
-        return true
-    }
-    return false
-}
+fun isCoPrime(m: Int, n: Int): Boolean = lcm(m , n) == m * n
 
 /**
  * Простая
@@ -209,13 +195,13 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Не использовать строки при решении задачи.
  */
 fun revert(n: Int): Int {
-    var Number = n
-    var Result = 0
-    while(Number > 0) {
-        Result = Result * 10 + (Number % 10)
-        Number /= 10
+    var number = n
+    var result = 0
+    while(number > 0) {
+        result = result * 10 + (number % 10)
+        number /= 10
     }
-    return Result
+    return result
 }
 
 /**
@@ -226,13 +212,13 @@ fun revert(n: Int): Int {
  * 15751 -- палиндром, 3653 -- нет.
  */
 fun isPalindrome(n: Int): Boolean {
-    var Number = n
-    var Result = 0
-    while(Number > 0) {
-        Result = Result * 10 + (Number % 10)
-        Number /= 10
+    var number = n
+    var result = 0
+    while(number > 0) {
+        result = result * 10 + (number % 10)
+        number /= 10
     }
-    if (n == Result) {
+    if (n == result) {
         return true
     }
     return false
@@ -245,14 +231,14 @@ fun isPalindrome(n: Int): Boolean {
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    var Number = n
-    var Results = 0
-    val Sum = n % 10
-    while(Number > 0) {
-        Results = Results * 10 + Sum
-        Number /= 10
+    var number = n
+    var results = 0
+    val sum = n % 10
+    while(number > 0) {
+        results = results * 10 + sum
+        number /= 10
     }
-    if (n == Results) {
+    if (n == results) {
         return false
     }
     return true
@@ -266,27 +252,27 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 fun squareSequenceDigit(n: Int): Int {
-    val Number1: Int = n
-    var Number2 = 0
+    val number1: Int = n
+    var number2 = 0
     var count = 0
     var result = 1
-    var Sum: Int
-    while (Number2 < Number1){
+    var sum: Int
+    while (number2 < number1){
         count++
         result = count * count
-        Sum = 0
+        sum = 0
         while(result > 0) {
             result /= 10
-            Sum++
+            sum++
         }
         result = count * count
-        Number2 += Sum
+        number2 += sum
     }
-    while (Number2 > Number1){
+    while (number2 > number1){
         result /= 10
-        Number2--
+        number2--
     }
-    if (Number2 == Number1) {
+    if (number2 == number1) {
         result %= 10
     }
     return result
@@ -300,27 +286,27 @@ fun squareSequenceDigit(n: Int): Int {
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
 fun fibSequenceDigit(n: Int): Int {
-    val Number1: Int = n
-    var Number2 = 0
+    val number1: Int = n
+    var number2 = 0
     var count = 0
     var result = 1
-    var Sum: Int
-    while (Number2 < Number1){
+    var sum: Int
+    while (number2 < number1){
         count++
         result = fib(count)
-        Sum = 0
+        sum = 0
         while(result > 0) {
             result /= 10
-            Sum++
+            sum++
         }
         result = fib(count)
-        Number2 += Sum
+        number2 += sum
     }
-    while (Number2 > Number1){
+    while (number2 > number1){
         result /= 10
-        Number2--
+        number2--
     }
-    if (Number2 == Number1) {
+    if (number2 == number1) {
         result %= 10
     }
     return result

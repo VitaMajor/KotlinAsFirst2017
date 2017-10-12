@@ -141,9 +141,9 @@ fun center(list: MutableList<Double>): MutableList<Double> {
     if (list.isEmpty()){
         return list
     }
-    val Middle = (list.sum() / list.size)
+    val middle = (list.sum() / list.size)
     for (i in 0 until list.size){
-        list[i] -= Middle
+        list[i] -= middle
     }
     return list
 }
@@ -157,11 +157,11 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
 fun times(a: List<Double>, b: List<Double>): Double {
-    var C = 0.0
+    var c = 0.0
     for (i in 0 until a.size){
-        C += (a[i] * b[i])
+        c += (a[i] * b[i])
     }
-    return C
+    return c
 }
 
 /**
@@ -173,11 +173,11 @@ fun times(a: List<Double>, b: List<Double>): Double {
  * Значение пустого многочлена равно 0.0 при любом x.
  */
 fun polynom(p: List<Double>, x: Double): Double {
-    var P = 0.0
+    var px = 0.0
     for (i in 0 until p.size){
-        P += p[i] * Math.pow(x,i.toDouble())
+        px += p[i] * Math.pow(x,i.toDouble())
     }
-    return P
+    return px
 }
 
 /**
@@ -210,12 +210,12 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  */
 
 fun factorize(n: Int): List<Int> {
-    var Num = n
+    var num = n
     val result = mutableListOf<Int>()
-    while (Num > 1) {
+    while (num > 1) {
         for (i in 2..n) {
-            while (Num % i == 0) {
-                Num /= i
+            while (num % i == 0) {
+                num /= i
                 result.add(i)
             }
         }
@@ -230,15 +230,15 @@ fun factorize(n: Int): List<Int> {
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
 fun factorizeToString(n: Int): String {
-    var Num = n
+    var num = n
     val result = mutableListOf<Int>()
     if (n == Int.MAX_VALUE){
         return Int.MAX_VALUE.toString()
     }
-    while (Num > 1) {
+    while (num > 1) {
         for (i in 2..n) {
-            while (Num % i == 0) {
-                Num /= i
+            while (num % i == 0) {
+                num /= i
                 result.add(i)
             }
         }
@@ -255,12 +255,12 @@ fun factorizeToString(n: Int): String {
  */
 fun convert(n: Int, base: Int): List<Int> {
     val result = mutableListOf<Int>()
-    var Num = n
+    var num = n
     do {
-        result.add (Num % base)
-        Num /= base
+        result.add (num % base)
+        num /= base
 
-    } while (Num > 0)
+    } while (num > 0)
     return result.reversed()
 }
 /**
@@ -272,23 +272,23 @@ fun convert(n: Int, base: Int): List<Int> {
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
 fun convertToString(n: Int, base: Int): String {
-    val Numbers:List<Int> = listOf(10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36)
-    val SysNum:List<String> = listOf("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+    val numbers:List<Int> = (10..36).toList()
+    val sysNum:List<Char> = ('a'..'z').toList()
     val result = mutableListOf<String>()
-    var Num = n
+    var num = n
     do {
-        if (Num % base > 9) {
+        if (num % base > 9) {
             for (i in 0..25){
-                if ((Num % base) == Numbers[i]) {
-                    result.add(SysNum[i])
+                if ((num % base) == numbers[i]) {
+                    result.add(sysNum[i].toString())
                 }
             }
         }
-        if (Num % base < 10){
-            result.add((Num % base).toString())
+        if (num % base < 10){
+            result.add((num % base).toString())
         }
-        Num /= base
-    } while (Num > 0)
+        num /= base
+    } while (num > 0)
     return result.reversed().joinToString( separator = "" )
 
 }
@@ -302,9 +302,9 @@ fun convertToString(n: Int, base: Int): String {
  */
 fun decimal(digits: List<Int>, base: Int): Int {
     var result = 0
-    val Numbers = digits.reversed()
+    val numbers = digits.reversed()
     for (i in (digits.size - 1) downTo 0) {
-            result += Numbers[i] * Math.pow(base.toDouble(), i.toDouble()).toInt()
+            result += numbers[i] * Math.pow(base.toDouble(), i.toDouble()).toInt()
     }
     return result
 }
@@ -319,20 +319,21 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Например: str = "13c", base = 14 -> 250
  */
 fun decimalFromString(str: String, base: Int): Int {
-    val Numbers:List<Int> = listOf(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35)
-    val SysNum:List<String> = listOf("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
+    val numbers:List<Int> = (0..35).toList()
+    val sysNum:List<String> = listOf("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g",
+            "h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
     var result = 0
-    val Num = mutableListOf<Int>()
+    val num = mutableListOf<Int>()
     for (element in str){
         for (i in 0..35) {
-            if (element.toString() == SysNum [i]) {
-                Num.add(Numbers[i])
+            if (element.toString() == sysNum [i]) {
+                num.add(numbers[i])
             }
         }
     }
-    val Num2 = Num.reversed()
-    for (i in (Num2.size - 1) downTo 0) {
-        result += Num2[i] * Math.pow(base.toDouble(), i.toDouble()).toInt()
+    val num2 = num.reversed()
+    for (i in (num2.size - 1) downTo 0) {
+        result += num2[i] * Math.pow(base.toDouble(), i.toDouble()).toInt()
     }
     return result
 
@@ -348,19 +349,19 @@ fun decimalFromString(str: String, base: Int): Int {
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    val Numbers:List<Int> = listOf(1000,900,500,400,100,90,50,40,10,9,5,4,1)
-    val RimNum:List<String> = listOf("M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I")
-    var Num = n
+    val numbers:List<Int> = listOf(1000,900,500,400,100,90,50,40,10,9,5,4,1)
+    val rimNum:List<String> = listOf("M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I")
+    var num = n
     var count = 0
-    val Result = mutableListOf<String>()
-    while (Num > 0) {
-        while (Numbers[count] <= Num) {
-            Num -= Numbers[count]
-            Result.add(RimNum[count])
+    val result = mutableListOf<String>()
+    while (num > 0) {
+        while (numbers[count] <= num) {
+            num -= numbers[count]
+            result.add(rimNum[count])
         }
         count++
     }
-    return Result.joinToString (separator = "")
+    return result.joinToString (separator = "")
 }
 
 /**
@@ -371,45 +372,51 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    val Numbers: List<Int> = listOf(900, 800, 700, 600, 500, 400, 300, 200, 100, 90, 80, 70, 60, 50, 40, 30, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
-    val RusNum: List<String> = listOf("девятьсот", "восемьсот", "семьсот", "шестьсот", "пятьсот", "четыреста", "триста", "двести", "сто", "девяносто", "восемьдесят", "семьдесят", "шестьдесят", "пятьдесят", "сорок", "тридцать", "двадцать", "девятнадцать", "восемнадцать", "семнадцать", "шестнадцать", "пятнадцать", "четырнадцать", "тринадцать", "двенадцать", "одиннадцать", "десять", "девять", "восемь", "семь", "шесть", "пять", "четыре", "три", "два", "один")
-    var NumBig = n / 1000
-    var NumSmall = n % 1000
+    val numbers: List<Int> = listOf(900, 800, 700, 600, 500, 400, 300, 200, 100, 90, 80, 70, 60, 50, 40, 30, 20, 19,
+            18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
+    val rusNum = listOf("девятьсот", "восемьсот", "семьсот", "шестьсот", "пятьсот", "четыреста", "триста","двести",
+            "сто", "девяносто", "восемьдесят", "семьдесят", "шестьдесят",
+            "пятьдесят", "сорок", "тридцать","двадцать","девятнадцать", "восемнадцать",
+            "семнадцать", "шестнадцать", "пятнадцать", "четырнадцать", "тринадцать",
+            "двенадцать", "одиннадцать", "десять", "девять", "восемь",
+            "семь", "шесть", "пять", "четыре", "три", "два", "один")
+    var numBig = n / 1000
+    var numSmall = n % 1000
     var count = 0
-    val Result = mutableListOf<String>()
+    val result = mutableListOf<String>()
     if (n >= 2000) {
-        while (NumBig > 0) {
-            while (Numbers[count] <= NumBig) {
-                NumBig -= Numbers[count]
+        while (numBig > 0) {
+            while (numbers[count] <= numBig) {
+                numBig -= numbers[count]
                 when {
-                    Numbers[count] == 2 -> Result.add("две")
-                    Numbers[count] == 1 -> Result.add("одна")
-                    else                -> Result.add(RusNum[count])
+                    numbers[count] == 2 -> result.add("две")
+                    numbers[count] == 1 -> result.add("одна")
+                    else                -> result.add(rusNum[count])
                 }
             }
             count++
         }
-        NumBig = n / 1000
-        if (((NumBig % 100) < 10) || ((NumBig % 100) > 20)) {
+        numBig = n / 1000
+        if (((numBig % 100) < 10) || ((numBig % 100) > 20)) {
             when {
-                (NumBig % 10 in 2..4)                         -> Result.add("тысячи")
-                (NumBig % 10 in 5..9) || ((NumBig % 10 == 0)) -> Result.add("тысяч")
-                (NumBig % 10 == 1)                            -> Result.add("тысяча")
+                (numBig % 10 in 2..4)                         -> result.add("тысячи")
+                (numBig % 10 in 5..9) || ((numBig % 10 == 0)) -> result.add("тысяч")
+                (numBig % 10 == 1)                            -> result.add("тысяча")
             }
         } else {
-            Result.add("тысяч")
+            result.add("тысяч")
         }
     }
         if (n in 1000..1999) {
-            Result.add("тысяча")
+            result.add("тысяча")
         }
         count = 0
-        while (NumSmall > 0) {
-            while (Numbers[count] <= NumSmall) {
-                NumSmall -= Numbers[count]
-                Result.add(RusNum[count])
+        while (numSmall > 0) {
+            while (numbers[count] <= numSmall) {
+                numSmall -= numbers[count]
+                result.add(rusNum[count])
             }
             count++
         }
-        return Result.joinToString(separator = " ")
+        return result.joinToString(separator = " ")
     }

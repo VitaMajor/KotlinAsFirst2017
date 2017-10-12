@@ -35,20 +35,16 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    if (age in 1..199) {
-        if (((age % 100) < 10) || ((age % 100) > 20)) {
-            when {
-                (age % 10) == 1 -> return "$age год"
-                (age % 10 in 2..4) -> return "$age года"
-                (age % 10 in 5..9) || ((age % 10 == 0)) -> return "$age лет"
-            }
-            return "$age года"
+    if (((age % 100) < 10) || ((age % 100) > 20)) {
+        when {
+            (age % 10) == 1 -> return "$age год"
+            (age % 10 in 2..4) -> return "$age года"
+            (age % 10 in 5..9) || ((age % 10 == 0)) -> return "$age лет"
         }
-        else
-            return "$age лет"
+        return "$age года"
     }
     else
-        return "Введён неверный возраст"
+        return "$age лет"
 }
 
 /**
@@ -136,7 +132,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     when {
         ((a > b + c) || (b > a + c) || (c > b + a)) -> return -1
         ((sqrC == sqrB + sqrA) || (sqrB == sqrA + sqrC) || (sqrA == sqrB + sqrC)) -> return 1
-        (((sqrC <= sqrB + sqrA) && (c >= a) && (c >= b)) || ((sqrB <= sqrA + sqrC) && (b >= a) && (b >= c)) || ((sqrA <= sqrB + sqrC) && (a >= c) && (a >= b))) -> return 0
+        (((sqrC <= sqrB + sqrA) && (c >= a) && (c >= b)) || ((sqrB <= sqrA + sqrC) && (b >= a) && (b >= c))
+                || ((sqrA <= sqrB + sqrC) && (a >= c) && (a >= b))) -> return 0
     }
     return 2
 }
@@ -150,28 +147,13 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if ((b >= a) && (d >= c)){
-        if ((a >= c) && (b >= d) ) {
-            if (a > d) {
-                return -1
-            }
-            return (d - a)
+    when {
+        ((a >= c) && (b >= d) && (a <= d)) -> return (d - a)
+        ((a >= c) && (b >= d) && (a > d))  -> return -1
+        ((a <= c) && (b <= d) && (b < c))  -> return -1
+        ((a <= c) && (b <= d) && (b >= c)) -> return (b - c)
+        ((a >= c) && (b <= d))             -> return (b - a)
+        ((a <= c) && (b >= d))             -> return (d - c)
         }
-        if ((a <= c) && (b <= d)) {
-            if (b < c) {
-                return -1
-            }
-            return (b - c)
-        }
-        if ((a >= c) && (b <= d)) {
-            return (b - a)
-        }
-        if ((a <= c) && (b >= d)){
-            return (d - c)
-        }
-            return -1
+    return -1
     }
-    else {
-        return -1
-    }
-}
