@@ -1,6 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson5.task1
 
+import javax.lang.model.type.NullType
+
 /**
  * Пример
  *
@@ -95,7 +97,7 @@ fun dateDigitToStr(digital: String): String {
     if ((part.size == 3)) {
         for (i in 0 until month.size) {
             if (part[1] == number[i]) {
-                return String.format("%d %s %02d", part[0].toInt(), month[i], part[2].toInt())
+                return String.format("%02d %s %02d", part[0].toInt(), month[i], part[2].toInt())
             }
         }
     }
@@ -191,10 +193,13 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки вернуть -1.
  */
 fun bestHighJump(jumps: String): Int {
-    val part = jumps.split("-"," ")
+    val part = jumps.split(" ")
     var result = -1
     try {
         for (i in 0 until part.size) {
+            if (part[i].trim() == "-") {
+                continue
+            }
             if (part[i].trim() == "") {
                 continue
             }
@@ -229,11 +234,12 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     val part = expression.split(" ")
-    var result = part[0].toInt()
+    var result: Int
     try {
         if (part.size == 1) {
             return part[0].toInt()
         }
+        result = part[0].toInt()
         for (i in 2 until part.size) {
             if ((part[i].trim() == "+") || (part[i].trim() == "-")) {
                 continue
