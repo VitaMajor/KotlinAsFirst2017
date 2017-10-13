@@ -76,7 +76,7 @@ fun dateStrToDigit(str: String): String {
     if (part.size == 3) {
         for (i in 0 until month.size) {
             if (part[1] == month[i]) {
-                return String.format("%02d.%02d.%02d", part[0].toInt(), number[i], part[2].toInt())
+                return String.format("%02d.%02d.%d", part[0].toInt(), number[i], part[2].toInt())
             }
         }
     }
@@ -97,7 +97,7 @@ fun dateDigitToStr(digital: String): String {
     if ((part.size == 3)) {
         for (i in 0 until month.size) {
             if (part[1] == number[i]) {
-                return String.format("%02d %s %02d", part[0].toInt(), month[i], part[2].toInt())
+                return String.format("%d %s %d", part[0].toInt(), month[i], part[2].toInt())
             }
         }
     }
@@ -116,11 +116,11 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    val part = phone.split("-","(",")")
     var result = ""
-    if (part.isEmpty()){
+    if (phone == ""){
         return result
     }
+    val part = phone.split("-","(",")")
     try {
         if (phone.first() == '+') {
             result += part[0].trim()
@@ -209,7 +209,7 @@ fun bestHighJump(jumps: String): Int {
             if (part[i].trim().first() == '%') {
                 continue
             }
-            if ((part[i].trim().toInt() >= 0 ) && (part[i+1].trim() == "+")) {
+            if((part[i].trim().toInt() >= 0 ) && (part[i+1].trim().last() == '+')) {
                 if (part[i].trim().toInt() >= result) {
                     result = part[i].trim().toInt()
                 }
@@ -252,7 +252,10 @@ fun plusMinus(expression: String): Int {
         return result
     }
     catch (e: NumberFormatException) {
-        return 0
+        return expression.toInt()
+    }
+    catch (e: IllegalArgumentException) {
+        return expression.toInt()
     }
 
 }
