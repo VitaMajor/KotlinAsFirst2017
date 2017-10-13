@@ -252,12 +252,8 @@ fun plusMinus(expression: String): Int {
         return result
     }
     catch (e: NumberFormatException) {
-        return expression.toInt()
+        throw IllegalArgumentException()
     }
-    catch (e: IllegalArgumentException) {
-        return expression.toInt()
-    }
-
 }
 
 /**
