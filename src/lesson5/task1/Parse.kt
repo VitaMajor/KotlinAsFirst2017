@@ -389,7 +389,7 @@ fun fromRoman(roman: String): Int {
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     val command = commands.split("")
-    val test = listOf("+", "-", "[", "]", " ", ">", "<")
+    val test = listOf("+","-","[","]"," ",">","<")
     val main = mutableListOf<Int>()
     val bracketsInt = mutableListOf<Int>()
     val bracketsString = mutableListOf<String>()
