@@ -244,7 +244,6 @@ fun convert(n: Int, base: Int): List<Int> {
     do {
         result.add (num % base)
         num /= base
-
     } while (num > 0)
     return result.reversed()
 }
@@ -392,16 +391,16 @@ fun russian(n: Int): String {
             result.add("тысяч")
         }
     }
-        if (n in 1000..1999) {
-            result.add("тысяча")
+    if (n in 1000..1999) {
+        result.add("тысяча")
+    }
+    count = 0
+    while (numSmall > 0) {
+        while (numbers[count] <= numSmall) {
+            numSmall -= numbers[count]
+            result.add(rusNum[count])
         }
-        count = 0
-        while (numSmall > 0) {
-            while (numbers[count] <= numSmall) {
-                numSmall -= numbers[count]
-                result.add(rusNum[count])
-            }
-            count++
-        }
-        return result.joinToString(separator = " ")
+        count++
+    }
+    return result.joinToString(separator = " ")
     }

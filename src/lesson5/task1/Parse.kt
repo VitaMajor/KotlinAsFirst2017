@@ -387,4 +387,86 @@ fun fromRoman(roman: String): Int {
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
+    val command = commands.split("")
+    val test = listOf("+", "-", "[", "]", " ", ">", "<")
+    val main = mutableListOf<Int>()
+    val bracketsInt = mutableListOf<Int>()
+    val bracketsString = mutableListOf<String>()
+    var part1 = 0
+    var part2 = 0
+    for (i in 1..cells) {
+        main.add(0)
+    }
+    for (i in 0 until command.size) {
+        if (command[i] in test.toString()) {
+            continue
+        }
+        else {
+            throw IllegalArgumentException()
+        }
+    }
+    for (i in 0 until command.size) {
+        if (command[i] == "[") {
+            bracketsInt.add(i)
+            bracketsString.add("[")
+            part1++
+        }
+        if (command[i] == "]") {
+            bracketsInt.add(i)
+            bracketsString.add("]")
+            part2++
+        }
+    }
+    if (part1 != part2){
+        throw IllegalArgumentException()
+    }
+    for (i in 1 until bracketsString.size) {
+        if (bracketsString[i] == "[" && bracketsString[i - 1] == "[")
+            for (j in bracketsString.size - 1 downTo 1) {
+                if (bracketsString[j] == "]" && bracketsString[j - 1] == "]") {
+                    val glassful1 = bracketsInt[j - 1]
+                    val glassful2 = bracketsString[j - 1]
+                    bracketsInt[j - 1] = bracketsInt[i - 1]
+                    bracketsInt[i - 1] = glassful1
+                    bracketsString[j - 1] = bracketsString[i - 1]
+                    bracketsString[i - 1] = glassful2
+                }
+            }
+    }
+    var count = 0
+    var count2 = 0
+    var status = cells / 2
+    while (count < (command.size)) {
+        when {
+            command[count] == "+" -> main[status] += 1
+            command[count] == "-" -> main[status] -= 1
+            command[count] == ">" -> status += 1
+            command[count] == "<" -> status -= 1
+        }
+        if (command[count] == "[" && main[status] == 0) {
+            for (i in 0 until bracketsString.size) {
+                if (count == bracketsInt[i] && bracketsString[i] == "[") {
+                    count = bracketsInt[i + 1]
+                }
+            }
+        }
+        if (command[count] == "]" && main[status] != 0) {
+            for (i in 0 until bracketsString.size) {
+                if (count == bracketsInt[i] && bracketsString[i] == "]") {
+                    count = bracketsInt[i - 1]
+                }
+            }
+        }
+        count++
+        count2++
+        if (count2 == limit + 1) {
+            break
+        }
+        if (status < 0 || status > cells) {
+            throw IllegalStateException()
+        }
+    }
+    return main
+}
+

@@ -72,14 +72,21 @@ data class Circle(val center: Point, val radius: Double) {
      * расстояние между их центрами минус сумма их радиусов.
      * Расстояние между пересекающимися окружностями считать равным 0.0.
      */
-    fun distance(other: Circle): Double = TODO()
+    fun distance(other: Circle): Double {
+        val op = Math.sqrt(sqr(center.x - other.center.x) + sqr(center.y - other.center.y))
+        - (radius + other.radius)
+        if (op > 0) {
+            return op
+        }
+            return 0.0
+    }
 
     /**
      * Тривиальная
      *
      * Вернуть true, если и только если окружность содержит данную точку НА себе или ВНУТРИ себя
      */
-    fun contains(p: Point): Boolean = TODO()
+    fun contains(p: Point): Boolean = Math.sqrt(sqr(center.x - p.x) + sqr(center.y - p.y)) <= radius
 }
 
 /**
