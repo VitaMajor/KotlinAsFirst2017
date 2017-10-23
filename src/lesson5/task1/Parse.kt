@@ -467,7 +467,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
         if (count2 == limit + 1) {
             break
         }
-        if (status < 0 || status > cells) {
+        if (status < 0 || status >= cells) {
             throw IllegalStateException()
         }
     }
