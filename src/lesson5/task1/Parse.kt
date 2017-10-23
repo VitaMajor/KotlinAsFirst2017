@@ -424,9 +424,9 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     for (i in 1 until bracketsString.size) {
         if (bracketsString[i] == "[" && bracketsString[i - 1] == "[")
             for (j in i+1 until bracketsString.size) {
-                if (bracketsString[j] == "]" && bracketsString[j - 1] == "]" && bracketsString[j - 2] == "[") {
-                    bracketsString.add(i,bracketsString[j])
-                    bracketsInt.add(i,bracketsInt[j])
+                if (bracketsString[j-1] == "]" && bracketsString[j - 2] == "]" && bracketsString[j] == "[") {
+                    bracketsString.add(i,bracketsString[j-1])
+                    bracketsInt.add(i,bracketsInt[j-1])
                     bracketsInt.removeAt(j+1)
                     bracketsString.removeAt(j+1)
                 }
@@ -441,9 +441,9 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     for (i in 1 until bracketsString.size) {
         if (bracketsString[i] == "[" && bracketsString[i - 1] == "[")
             for (j in i+1 until bracketsString.size) {
-                if (bracketsString[j] == "]" && bracketsString[j - 1] == "]" && bracketsString[j - 2] == "[") {
-                    bracketsString.add(i,bracketsString[j])
-                    bracketsInt.add(i,bracketsInt[j])
+                if (bracketsString[j-1] == "]" && bracketsString[j - 2] == "]" && bracketsString[j] == "[") {
+                    bracketsString.add(i,bracketsString[j-1])
+                    bracketsInt.add(i,bracketsInt[j-1])
                     bracketsInt.removeAt(j+1)
                     bracketsString.removeAt(j+1)
                 }
