@@ -38,6 +38,9 @@ data class Square(val column: Int, val row: Int) {
  * Если нотация некорректна, бросить IllegalArgumentException
  */
 fun square(notation: String): Square {
+    if (notation == "") {
+        throw IllegalArgumentException()
+    }
     val columnSt = ('a'..'h').toList()
     if (notation[0] in columnSt && notation.length == 2 && (notation[1].toInt() - 48) in 1..8){
         for (i in 0 until columnSt.size) {
@@ -73,10 +76,10 @@ fun square(notation: String): Square {
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
 fun rookMoveNumber(start: Square, end: Square): Int {
-    if (start == end) {
-        return 0
-    }
     if (start.inside() && end.inside()) {
+        if (start == end) {
+            return 0
+        }
         when {
             start.column == end.column -> return 1
             start.row == end.row -> return 1
