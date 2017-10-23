@@ -217,10 +217,7 @@ fun isPalindrome(n: Int): Boolean {
         result = result * 10 + (number % 10)
         number /= 10
     }
-    if (n == result) {
-        return true
-    }
-    return false
+    return n == result
 }
 
 /**
@@ -237,10 +234,7 @@ fun hasDifferentDigits(n: Int): Boolean {
         results = results * 10 + sum
         number /= 10
     }
-    if (n == results) {
-        return false
-    }
-    return true
+    return n != results
 }
 
 /**
@@ -275,7 +269,7 @@ fun squareSequenceDigit(n: Int): Int {
         result %= 10
     }
     return result
-    }
+}
 
 /**
  * Сложная

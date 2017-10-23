@@ -122,7 +122,7 @@ fun flattenPhoneNumber(phone: String): String {
     }
     val part = phone.split("-","(",")")
     try {
-        if (phone.first() == '+') {
+        if (phone.first() == '+' && phone.length > 1) {
             result += part[0].trim()
             for (i in 1 until part.size) {
                 if (part[i] == "") {
@@ -423,10 +423,18 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     }
     for (i in 1 until bracketsString.size) {
         if (bracketsString[i] == "[" && bracketsString[i - 1] == "[")
-            for (j in i until bracketsString.size) {
-                if (bracketsString[j] == "]" && bracketsString[j - 1] == "]") {
+            for (j in i+1 until bracketsString.size) {
+                if (bracketsString[j] == "]" && bracketsString[j - 1] == "]" && bracketsString[j - 2] == "[") {
                     bracketsString.add(i,bracketsString[j])
                     bracketsInt.add(i,bracketsInt[j])
+                    bracketsInt.removeAt(j+1)
+                    bracketsString.removeAt(j+1)
+                }
+                else if (bracketsString[j] == "]" && bracketsString[j-1] == "]" && j==bracketsString.size - 1) {
+                    bracketsString.add(i,bracketsString[j])
+                    bracketsInt.add(i,bracketsInt[j])
+                    bracketsInt.removeAt(j+1)
+                    bracketsString.removeAt(j+1)
                 }
             }
     }

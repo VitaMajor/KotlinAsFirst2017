@@ -288,7 +288,11 @@ fun decimal(digits: List<Int>, base: Int): Int {
     var result = 0
     val numbers = digits.reversed()
     for (i in (digits.size - 1) downTo 0) {
-            result += numbers[i] * Math.pow(base.toDouble(), i.toDouble()).toInt()
+        var pow = 1
+        for (j in 1 .. i) {
+            pow *= base
+        }
+            result += numbers[i] * pow
     }
     return result
 }
@@ -317,7 +321,11 @@ fun decimalFromString(str: String, base: Int): Int {
     }
     val num2 = num.reversed()
     for (i in (num2.size - 1) downTo 0) {
-        result += num2[i] * Math.pow(base.toDouble(), i.toDouble()).toInt()
+        var pow = 1
+        for (j in 1 .. i) {
+            pow *= base
+        }
+        result += num2[i] * pow
     }
     return result
 
