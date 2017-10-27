@@ -421,7 +421,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     if (part1 != part2){
         throw IllegalArgumentException()
     }
-    for (i in 1 until bracketsString.size) {
+    for (i in bracketsString.size - 1 downTo 1) {
         if (bracketsString[i] == "[" && bracketsString[i - 1] == "[")
             for (j in i until bracketsString.size) {
                 if (bracketsString[j - 1] == "]" && bracketsString[j - 2] == "]" && bracketsString[j] == "[") {
