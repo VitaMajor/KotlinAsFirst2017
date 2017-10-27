@@ -424,14 +424,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     for (i in bracketsString.size - 1 downTo 1) {
         if (bracketsString[i] == "[" && bracketsString[i - 1] == "[")
             for (j in i until bracketsString.size) {
-                if (bracketsString[j - 1] == "]" && bracketsString[j - 2] == "]" && bracketsString[j] == "[") {
-                    bracketsString.add(i,bracketsString[j - 1])
-                    bracketsInt.add(i,bracketsInt[j - 1])
-                    bracketsInt.removeAt(j)
-                    bracketsString.removeAt(j)
-                    break
-                }
-                else if (bracketsString[j] == "]" && bracketsString[j-1] == "]") {
+                if (bracketsString[j] == "]" && bracketsString[j-1] == "]") {
                     bracketsString.add(i,bracketsString[j])
                     bracketsInt.add(i,bracketsInt[j])
                     bracketsInt.removeAt(j + 1)
@@ -443,7 +436,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     var count = 0
     var count2 = 0
     var status = cells / 2
-    while (count < (command.size)) {
+    while (count in 0..command.size) {
         when {
             command[count] == "+" -> main[status] += 1
             command[count] == "-" -> main[status] -= 1
@@ -474,9 +467,6 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
         if (status < 0 || status >= cells) {
             throw IllegalStateException()
         }
-    }
-    if (cells == 387) {
-        return bracketsInt
     }
     return main
 }
