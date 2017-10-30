@@ -330,9 +330,9 @@ fun fromRoman(roman: String): Int {
             for (n in 0 until rimNum.size) {
                 if (parts[i].trim() == rimNum[n]) {
                     if (parts[i] == "C" || parts[i] == "X" || parts[i] == "I") {
-                        when {
-                            parts[i] + parts[i + 1] == rimNum[n - 1] -> result += numbers[n - 1] - numbers[n - 2]
-                            parts[i] + parts[i + 1] == rimNum[n - 3] -> result += numbers[n - 3] - numbers[n - 4]
+                        when (parts[i] + parts[i + 1]){
+                            rimNum[n - 1] -> result += numbers[n - 1] - numbers[n - 2]
+                            rimNum[n - 3] -> result += numbers[n - 3] - numbers[n - 4]
                             else -> result += numbers[n]
                         }
                     } else {
@@ -436,7 +436,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     var count = 0
     var count2 = 0
     var status = cells / 2
-    while (count in 0..command.size) {
+    while (count < (command.size)) {
         when {
             command[count] == "+" -> main[status] += 1
             command[count] == "-" -> main[status] -= 1
@@ -464,7 +464,7 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
         if (count2 == limit + 1) {
             break
         }
-        if (status < 0 || status >= cells) {
+        if (status !in 0 until cells) {
             throw IllegalStateException()
         }
     }

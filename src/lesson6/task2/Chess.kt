@@ -1,6 +1,9 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson6.task2
 
+import lesson6.task1.diameter
+import javax.swing.text.Segment
+
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
  * Поэтому, обе координаты клетки (горизонталь row, вертикаль column) могут находиться в пределах от 1 до 8.
@@ -109,7 +112,7 @@ fun rookTrajectory(start: Square, end: Square): List<Square> {
         return moves
     }
     when {
-        start.column == end.column || start.row == end.row-> moves.add(end)
+        start.column == end.column || start.row == end.row -> moves.add(end)
     }
     if (start.column != end.column && start.row != end.row) {
         moves.add(Square(start.column,end.row))
@@ -141,8 +144,26 @@ fun rookTrajectory(start: Square, end: Square): List<Square> {
  * Примеры: bishopMoveNumber(Square(3, 1), Square(6, 3)) = -1; bishopMoveNumber(Square(3, 1), Square(3, 7)) = 2.
  * Слон может пройти через клетку (6, 4) к клетке (3, 7).
  */
-fun bishopMoveNumber(start: Square, end: Square): Int = TODO()
-
+fun bishopMoveNumber(start: Square, end: Square): Int {
+    if (start.inside() && end.inside()) {
+        if (start == end) {
+            return 0
+        }
+        when {
+            Math.abs(start.column - end.column) == Math.abs(start.row - end.row) -> return 1
+        }
+        for (i in 1..8){
+            for (j in 1..8) {
+                if (Math.abs(start.column - i) == Math.abs(start.row - j) &&
+                        Math.abs(end.column - i) == Math.abs(end.row - j)){
+                    return 2
+                }
+            }
+        }
+        return -1
+    }
+    throw IllegalArgumentException()
+}
 /**
  * Сложная
  *
@@ -161,7 +182,27 @@ fun bishopMoveNumber(start: Square, end: Square): Int = TODO()
  *          bishopTrajectory(Square(1, 3), Square(6, 8)) = listOf(Square(1, 3), Square(6, 8))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun bishopTrajectory(start: Square, end: Square): List<Square> {
+    val moves = mutableListOf(start)
+    if (start == end) {
+        return moves
+    }
+    if (Math.abs(start.column - end.column) == Math.abs(start.row - end.row)) {
+        moves.add(end)
+        return moves
+    }
+    for (i in 1..8){
+        for (j in 1..8) {
+            if (Math.abs(start.column - i) == Math.abs(start.row - j) &&
+                    Math.abs(end.column - i) == Math.abs(end.row - j)){
+                moves.add(Square(i,j))
+                moves.add(end)
+                return moves
+            }
+        }
+    }
+    return listOf()
+}
 
 /**
  * Средняя
@@ -183,7 +224,19 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Пример: kingMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
-fun kingMoveNumber(start: Square, end: Square): Int = TODO()
+fun kingMoveNumber(start: Square, end: Square): Int {
+    if (start.inside() && end.inside()) {
+        if (start == end) {
+            return 0
+        }
+        when {
+            Math.abs(start.column - end.column) > Math.abs(start.row - end.row) -> return Math.abs(start.column - end.column)
+            Math.abs(start.column - end.column) < Math.abs(start.row - end.row)  -> return Math.abs(start.row - end.row)
+        }
+        return Math.abs(start.row - end.row)
+    }
+    throw IllegalArgumentException()
+}
 
 /**
  * Сложная
@@ -199,7 +252,76 @@ fun kingMoveNumber(start: Square, end: Square): Int = TODO()
  *          kingTrajectory(Square(3, 5), Square(6, 2)) = listOf(Square(3, 5), Square(4, 4), Square(5, 3), Square(6, 2))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun kingTrajectory(start: Square, end: Square): List<Square> {
+    if (start.inside() && end.inside()) {
+        val moves = mutableListOf(start)
+        if (start == end) {
+            return moves
+        }
+        var rowLight = start.row - end.row
+        var columnLight = start.column - end.column
+        var i = 1
+        while (rowLight != 0 && columnLight != 0) {
+            if (rowLight < 0 && columnLight < 0) {
+                moves.add(Square(start.column + i,start.row + i))
+                i++
+                rowLight++
+                columnLight++
+            }
+            else if (rowLight < 0 && columnLight > 0) {
+                moves.add(Square(start.column - i,start.row + i))
+                i++
+                rowLight++
+                columnLight--
+            }
+            else if (rowLight > 0 && columnLight < 0) {
+                moves.add(Square(start.column + i,start.row - i))
+                i++
+                rowLight--
+                columnLight++
+            }
+            else if (rowLight > 0 && columnLight > 0) {
+                moves.add(Square(start.column - i,start.row - i))
+                i++
+                rowLight--
+                columnLight--
+            }
+        }
+        i--
+        if (rowLight == 0) {
+            var j = 1
+            while (columnLight != 0) {
+                if (columnLight < 0) {
+                    moves.add(Square((start.column + i) + j, end.row))
+                    j++
+                    columnLight++
+                }
+                if (columnLight > 0) {
+                    moves.add(Square((start.column - i) - j, end.row))
+                    j++
+                    columnLight--
+                }
+            }
+        }
+        else if (columnLight == 0) {
+            var j = 1
+            while (rowLight != 0) {
+                if (rowLight < 0) {
+                    moves.add (Square(end.column,start.row + i + j))
+                    j++
+                    rowLight++
+                }
+                if (rowLight > 0) {
+                    moves.add (Square(end.column,start.row - i - j))
+                    j++
+                    rowLight--
+                }
+            }
+        }
+        return moves
+    }
+    throw IllegalArgumentException()
+}
 
 /**
  * Сложная
@@ -224,8 +346,19 @@ fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Пример: knightMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Конь может последовательно пройти через клетки (5, 2) и (4, 4) к клетке (6, 3).
  */
-fun knightMoveNumber(start: Square, end: Square): Int = TODO()
-
+fun knightMoveNumber(start: Square, end: Square): Int {
+    if (start.inside() && end.inside()) {
+        if (start == end) {
+            return 0
+        }
+        when {
+            Math.abs(start.column - end.column) > Math.abs(start.row - end.row) -> return Math.abs(start.column - end.column)
+            Math.abs(start.column - end.column) < Math.abs(start.row - end.row)  -> return Math.abs(start.row - end.row)
+        }
+        return Math.abs(start.row - end.row)
+    }
+    throw IllegalArgumentException()
+}
 /**
  * Очень сложная
  *
