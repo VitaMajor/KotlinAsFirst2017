@@ -433,6 +433,11 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
                 }
             }
     }
+    for (i in 1..bracketsInt.size step 2) {
+        if (bracketsString[i] != "]" || bracketsString[i - 1] != "["){
+            throw IllegalArgumentException()
+        }
+    }
     var count = 0
     var count2 = 0
     var status = cells / 2

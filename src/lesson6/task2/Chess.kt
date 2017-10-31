@@ -229,11 +229,7 @@ fun kingMoveNumber(start: Square, end: Square): Int {
         if (start == end) {
             return 0
         }
-        when {
-            Math.abs(start.column - end.column) > Math.abs(start.row - end.row) -> return Math.abs(start.column - end.column)
-            Math.abs(start.column - end.column) < Math.abs(start.row - end.row)  -> return Math.abs(start.row - end.row)
-        }
-        return Math.abs(start.row - end.row)
+        return Math.max(Math.abs(start.column - end.column),Math.abs(start.row - end.row))
     }
     throw IllegalArgumentException()
 }
@@ -262,59 +258,51 @@ fun kingTrajectory(start: Square, end: Square): List<Square> {
         var columnLight = start.column - end.column
         var i = 1
         while (rowLight != 0 && columnLight != 0) {
-            if (rowLight < 0 && columnLight < 0) {
-                moves.add(Square(start.column + i,start.row + i))
-                i++
-                rowLight++
-                columnLight++
+            when {
+                rowLight < 0 && columnLight < 0 -> {moves.add(Square(start.column + i,start.row + i))
+                    rowLight++
+                    columnLight++}
+                rowLight < 0 && columnLight > 0 -> {moves.add(Square(start.column - i,start.row + i))
+                    rowLight++
+                    columnLight--}
+                rowLight > 0 && columnLight < 0 -> {moves.add(Square(start.column + i,start.row - i))
+                    rowLight--
+                    columnLight++}
+                rowLight > 0 && columnLight > 0 -> {moves.add(Square(start.column - i,start.row - i))
+                    rowLight--
+                    columnLight--}
             }
-            else if (rowLight < 0 && columnLight > 0) {
-                moves.add(Square(start.column - i,start.row + i))
-                i++
-                rowLight++
-                columnLight--
-            }
-            else if (rowLight > 0 && columnLight < 0) {
-                moves.add(Square(start.column + i,start.row - i))
-                i++
-                rowLight--
-                columnLight++
-            }
-            else if (rowLight > 0 && columnLight > 0) {
-                moves.add(Square(start.column - i,start.row - i))
-                i++
-                rowLight--
-                columnLight--
-            }
+            i++
         }
         i--
-        if (rowLight == 0) {
-            var j = 1
-            while (columnLight != 0) {
-                if (columnLight < 0) {
-                    moves.add(Square((start.column + i) + j, end.row))
+        when {
+            rowLight == 0 -> {
+                var j = 1
+                while (columnLight != 0) {
+                    when {
+                        columnLight < 0 -> {
+                            moves.add(Square((start.column + i) + j, end.row))
+                            columnLight++
+                        }
+                        columnLight > 0 -> {
+                            moves.add(Square((start.column - i) - j, end.row))
+                            columnLight--
+                        }
+
+                    }
                     j++
-                    columnLight++
-                }
-                if (columnLight > 0) {
-                    moves.add(Square((start.column - i) - j, end.row))
-                    j++
-                    columnLight--
                 }
             }
-        }
-        else if (columnLight == 0) {
-            var j = 1
-            while (rowLight != 0) {
-                if (rowLight < 0) {
-                    moves.add (Square(end.column,start.row + i + j))
+            columnLight == 0 -> {
+                var j = 1
+                while (rowLight != 0) {
+                    when {
+                        rowLight < 0 -> { moves.add (Square(end.column,start.row + i + j))
+                            rowLight++}
+                        rowLight > 0 -> { moves.add (Square(end.column,start.row - i - j))
+                            rowLight--}
+                    }
                     j++
-                    rowLight++
-                }
-                if (rowLight > 0) {
-                    moves.add (Square(end.column,start.row - i - j))
-                    j++
-                    rowLight--
                 }
             }
         }
@@ -346,19 +334,7 @@ fun kingTrajectory(start: Square, end: Square): List<Square> {
  * Пример: knightMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Конь может последовательно пройти через клетки (5, 2) и (4, 4) к клетке (6, 3).
  */
-fun knightMoveNumber(start: Square, end: Square): Int {
-    if (start.inside() && end.inside()) {
-        if (start == end) {
-            return 0
-        }
-        when {
-            Math.abs(start.column - end.column) > Math.abs(start.row - end.row) -> return Math.abs(start.column - end.column)
-            Math.abs(start.column - end.column) < Math.abs(start.row - end.row)  -> return Math.abs(start.row - end.row)
-        }
-        return Math.abs(start.row - end.row)
-    }
-    throw IllegalArgumentException()
-}
+fun knightMoveNumber(start: Square, end: Square): Int = TODO()
 /**
  * Очень сложная
  *

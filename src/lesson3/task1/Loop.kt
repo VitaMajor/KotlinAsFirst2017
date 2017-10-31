@@ -1,7 +1,6 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson3.task1
 
-import java.util.function.ToDoubleBiFunction
 
 /**
  * Пример
