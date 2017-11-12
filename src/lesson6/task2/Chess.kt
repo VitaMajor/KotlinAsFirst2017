@@ -81,7 +81,7 @@ fun square(notation: String): Square {
  */
 fun rookMoveNumber(start: Square, end: Square): Int {
     if (start.inside() && end.inside()) {
-        if (start === end) {
+        if (start == end) {
             return 0
         }
         when {
@@ -109,7 +109,7 @@ fun rookMoveNumber(start: Square, end: Square): Int {
  */
 fun rookTrajectory(start: Square, end: Square): List<Square> {
     val moves = mutableListOf(start)
-    if (start === end) {
+    if (start == end) {
         return moves
     }
     when {
@@ -147,7 +147,7 @@ fun rookTrajectory(start: Square, end: Square): List<Square> {
  */
 fun bishopMoveNumber(start: Square, end: Square): Int {
     if (start.inside() && end.inside()) {
-        if (start === end) {
+        if (start == end) {
             return 0
         }
         when {
@@ -185,7 +185,7 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
  */
 fun bishopTrajectory(start: Square, end: Square): List<Square> {
     val moves = mutableListOf(start)
-    if (start === end) {
+    if (start == end) {
         return moves
     }
     if (Math.abs(start.column - end.column) == Math.abs(start.row - end.row)) {
@@ -227,7 +227,7 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> {
  */
 fun kingMoveNumber(start: Square, end: Square): Int {
     if (start.inside() && end.inside()) {
-        if (start === end) {
+        if (start == end) {
             return 0
         }
         return Math.max(Math.abs(start.column - end.column),Math.abs(start.row - end.row))
@@ -252,7 +252,7 @@ fun kingMoveNumber(start: Square, end: Square): Int {
 fun kingTrajectory(start: Square, end: Square): List<Square> {
     if (start.inside() && end.inside()) {
         val moves = mutableListOf(start)
-        if (start === end) {
+        if (start == end) {
             return moves
         }
         var rowLight = start.row - end.row
