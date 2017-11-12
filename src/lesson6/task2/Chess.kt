@@ -434,7 +434,8 @@ fun knightTrajectory(start: Square, end: Square): List<Square> {
                 }
             }
         }
-        var movesCount = g.bfs(String.format("%s%s",start.column.toString(),start.row.toString()),String.format("%s%s",end.column.toString(),end.row.toString()))
+        var movesCount = g.bfs(String.format("%s%s",start.column.toString(),start.row.toString()),
+                String.format("%s%s",end.column.toString(),end.row.toString()))
         var moveSquare = Square(start.column, start.row)
         var moveString = String.format("%s%s", start.column.toString(), start.row.toString())
         val moveEnd = String.format("%s%s",end.column.toString(),end.row.toString())
@@ -442,7 +443,7 @@ fun knightTrajectory(start: Square, end: Square): List<Square> {
             if (Square(moveSquare.column - 1,moveSquare.row - 2).inside() && g.bfs(moveString,
                     String.format("%s%s", (moveSquare.column - 1).toString(), (moveSquare.row - 2).toString())) == 1
                     && g.bfs(String.format("%s%s",(moveSquare.column - 1).toString(),
-                    (moveSquare.row - 2).toString()),moveEnd) == movesCount - 1 && moveSquare.inside()) {
+                    (moveSquare.row - 2).toString()),moveEnd) == movesCount - 1) {
                 movesCount--
                 moveSquare = Square(moveSquare.column - 1, moveSquare.row - 2)
                 moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
@@ -451,7 +452,7 @@ fun knightTrajectory(start: Square, end: Square): List<Square> {
             if (Square(moveSquare.column - 2,moveSquare.row - 1).inside() && g.bfs(moveString,
                     String.format("%s%s", (moveSquare.column - 2).toString(), (moveSquare.row - 1).toString())) == 1
                     && g.bfs(String.format("%s%s",(moveSquare.column - 2).toString(),
-                    (moveSquare.row - 1).toString()),moveEnd) == movesCount - 1 && moveSquare.inside()) {
+                    (moveSquare.row - 1).toString()),moveEnd) == movesCount - 1) {
                 movesCount--
                 moveSquare = Square(moveSquare.column - 2, moveSquare.row - 1)
                 moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
@@ -460,7 +461,7 @@ fun knightTrajectory(start: Square, end: Square): List<Square> {
             if ( Square(moveSquare.column - 2,moveSquare.row + 1).inside() && g.bfs(moveString,
                     String.format("%s%s", (moveSquare.column - 2).toString(), (moveSquare.row + 1).toString())) == 1
                     && g.bfs(String.format("%s%s",(moveSquare.column - 2).toString(),
-                    (moveSquare.row + 1).toString()),moveEnd) == movesCount - 1 && moveSquare.inside()) {
+                    (moveSquare.row + 1).toString()),moveEnd) == movesCount - 1) {
                 movesCount--
                 moveSquare = Square(moveSquare.column - 2, moveSquare.row + 1)
                 moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
@@ -469,7 +470,7 @@ fun knightTrajectory(start: Square, end: Square): List<Square> {
             if (Square(moveSquare.column + 1,moveSquare.row - 2).inside() && g.bfs(moveString,
                     String.format("%s%s", (moveSquare.column + 1).toString(), (moveSquare.row - 2).toString())) == 1
                     && g.bfs(String.format("%s%s",(moveSquare.column + 1).toString(),
-                    (moveSquare.row - 2).toString()),moveEnd) == movesCount - 1 && moveSquare.inside()) {
+                    (moveSquare.row - 2).toString()),moveEnd) == movesCount - 1) {
                 movesCount--
                 moveSquare = Square(moveSquare.column + 1, moveSquare.row - 2)
                 moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
@@ -478,7 +479,7 @@ fun knightTrajectory(start: Square, end: Square): List<Square> {
             if (Square(moveSquare.column + 1,moveSquare.row + 2).inside() && g.bfs(moveString,
                     String.format("%s%s", (moveSquare.column + 1).toString(), (moveSquare.row + 2).toString())) == 1
                     && g.bfs(String.format("%s%s",(moveSquare.column + 1).toString(),
-                    (moveSquare.row + 2).toString()),moveEnd) == movesCount - 1 && moveSquare.inside()) {
+                    (moveSquare.row + 2).toString()),moveEnd) == movesCount - 1) {
                 movesCount--
                 moveSquare = Square(moveSquare.column + 1, moveSquare.row + 2)
                 moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
@@ -487,7 +488,7 @@ fun knightTrajectory(start: Square, end: Square): List<Square> {
             if (Square(moveSquare.column + 2,moveSquare.row - 1).inside() && g.bfs(moveString,
                     String.format("%s%s", (moveSquare.column + 2).toString(), (moveSquare.row - 1).toString())) == 1
                     && g.bfs(String.format("%s%s",(moveSquare.column + 2).toString(),
-                    (moveSquare.row - 1).toString()),moveEnd) == movesCount - 1 && moveSquare.inside()) {
+                    (moveSquare.row - 1).toString()),moveEnd) == movesCount - 1) {
                 movesCount--
                 moveSquare = Square(moveSquare.column + 2, moveSquare.row - 1)
                 moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
@@ -496,8 +497,7 @@ fun knightTrajectory(start: Square, end: Square): List<Square> {
             if (Square(moveSquare.column + 2,moveSquare.row + 1).inside() && g.bfs(moveString,
                     String.format("%s%s", (moveSquare.column + 2).toString(), (moveSquare.row + 1).toString())) == 1
                     && g.bfs(String.format("%s%s",(moveSquare.column + 2).toString(),
-                    (moveSquare.row + 1).toString()),moveEnd) == movesCount - 1
-                    ) {
+                    (moveSquare.row + 1).toString()),moveEnd) == movesCount - 1) {
                 movesCount--
                 moveSquare = Square(moveSquare.column + 2, moveSquare.row + 1)
                 moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
@@ -506,7 +506,7 @@ fun knightTrajectory(start: Square, end: Square): List<Square> {
             if (Square(moveSquare.column - 1,moveSquare.row + 2).inside() && g.bfs(moveString,
                     String.format("%s%s", (moveSquare.column - 1).toString(), (moveSquare.row + 2).toString())) == 1
                     && g.bfs(String.format("%s%s",(moveSquare.column - 1).toString(),
-                    (moveSquare.row + 2).toString()),moveEnd) == movesCount - 1 && moveSquare.inside()) {
+                    (moveSquare.row + 2).toString()),moveEnd) == movesCount - 1) {
                 movesCount--
                 moveSquare = Square(moveSquare.column - 1, moveSquare.row + 2)
                 moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
