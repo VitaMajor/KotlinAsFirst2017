@@ -3,6 +3,7 @@ package lesson7.task2
 
 import lesson7.task1.Matrix
 import lesson7.task1.createMatrix
+import lesson8.task1.markdownToHtml
 
 // Все задачи в этом файле требуют наличия реализации интерфейса "Матрица" в Matrix.kt
 
@@ -59,7 +60,11 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
-fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSpiral(height: Int, width: Int): Matrix<Int> {
+    val result = createMatrix(height,width,e = 0)
+
+    return result
+}
 
 /**
  * Сложная
@@ -91,7 +96,6 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
  * 14 17 19 20
  */
 fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
-
 /**
  * Средняя
  *
