@@ -62,30 +62,30 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
 fun generateSpiral(height: Int, width: Int): Matrix<Int> {
     val result = createMatrix(height,width,0)
     var count = 1
-    var perimetr = 0
-    for (i in 0..perimetr) {
+    val circle = Math.max(height,width)/2
+    for (i in 0..circle) {
         for (j in 0 until width) {
-            if (result[perimetr, j] == 0) {
-                result[perimetr, j] = count++
+            if (result[i, j] == 0) {
+                result[i, j] = count++
             }
         }
         for (j in 0 until height) {
-            if (result[j, width - 1 - perimetr] == 0) {
-                result[j, width - 1 - perimetr] = count++
+            if (result[j, width - 1 - i] == 0) {
+                result[j, width - 1 - i] = count++
             }
         }
         for (j in width - 1 downTo 0) {
-            if (result[height - 1 - perimetr, j] == 0) {
-                result[height - 1 - perimetr, j] = count++
+            if (result[height - 1 - i, j] == 0) {
+                result[height - 1 - i, j] = count++
             }
         }
         for (j in height - 1 downTo 0) {
-            if (result[j, perimetr] == 0) {
-                result[j, perimetr] = count++
+            if (result[j, i] == 0) {
+                result[j, i] = count++
             }
         }
         count++
-        perimetr++
+
         var count2 = 0
 
         for (o in 0 until height) {
@@ -119,30 +119,29 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
 fun generateRectangles(height: Int, width: Int): Matrix<Int> {
     val result = createMatrix(height,width,0)
     var count = 1
-    var perimetr = 0
-    for (i in 0..perimetr) {
+    val circle = Math.max(height,width)/2
+    for (i in 0..circle) {
         for (j in 0 until height) {
-            if (result[j, perimetr] == 0) {
-                result[j, perimetr] = count
+            if (result[j, i] == 0) {
+                result[j, i] = count
             }
         }
         for (j in 0 until width) {
-            if (result[height - 1 - perimetr, j] == 0) {
-                result[height - 1 - perimetr, j] = count
+            if (result[height - 1 - i, j] == 0) {
+                result[height - 1 - i, j] = count
             }
         }
         for (j in height - 1 downTo 0) {
-            if (result[j, width - 1 - perimetr] == 0) {
-                result[j, width - 1 - perimetr] = count
+            if (result[j, width - 1 - i] == 0) {
+                result[j, width - 1 - i] = count
             }
         }
         for (j in width - 1 downTo 0) {
-            if (result[perimetr, j] == 0) {
-                result[perimetr, j] = count
+            if (result[i, j] == 0) {
+                result[i, j] = count
             }
         }
         count++
-        perimetr++
         var count2 = 0
         for (o in 0 until height) {
             for (j in 0 until width) {
