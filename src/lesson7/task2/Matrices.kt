@@ -184,7 +184,7 @@ fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
     val result = matrix
     for (i in 0 until matrix.width) {
         for (j in 0 until matrix.width) {
-            result[i,j] = matrix[matrix.width - j, i]
+            result[i,j] = matrix[matrix.width - j - 1, i]
         }
     }
     return result
