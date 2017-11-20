@@ -84,10 +84,7 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
                 result[j, i] = count++
             }
         }
-        count++
-
         var count2 = 0
-
         for (o in 0 until height) {
             for (j in 0 until width) {
                 if (result[o,j] == 0) {
