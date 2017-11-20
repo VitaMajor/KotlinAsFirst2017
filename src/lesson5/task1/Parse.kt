@@ -476,3 +476,69 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     return main
 }
 
+fun timeMinuteToString (minute: Int): String {
+    if (minute < 10 || minute > 20) {
+        when {
+            minute % 10 == 1 -> return " минута"
+            minute % 10 in 2..4 -> return " минуты"
+            minute % 10 in 5..9 || minute % 10 == 0 -> return " минут"
+        }
+    }
+    return " минут"
+}
+
+fun timeHoursToString (hours: Int): String {
+    if (hours < 10 || hours > 20) {
+        when {
+            hours % 10 == 1 -> return " час "
+            hours % 10 in 2..4 -> return " часа "
+            hours % 10 in 5..9 || hours % 10 == 0 -> return " часов "
+        }
+    }
+        return " часов "
+}
+
+fun myFun(from: String, to: String, route: String): String{
+    if (from == "" || to == ""){
+        throw IllegalArgumentException("Не введена станция")
+    }
+    val parts = route.split(";")
+    var time = ""
+    val hashTableNameStation = hashMapOf<String,String>()
+    for (i in 0 until parts.size) {
+        val part = parts[i].trim().split(" ")
+        val station = part.subList(0, part.size - 1)
+        hashTableNameStation.put(station.joinToString(separator = " "), part.last())
+    }
+    try {
+        val timeFrom = hashTableNameStation[from]!!
+        val timeTo = hashTableNameStation[to]!!
+        val partsTimeFrom = timeFrom.split(":")
+        val partsTimeTo = timeTo.split(":")
+
+        if (partsTimeFrom.size > 2 || partsTimeTo.size > 2 || partsTimeFrom[0].toInt() > 23
+                || partsTimeFrom[1].toInt() > 59 || partsTimeTo[0].toInt() > 23
+                || partsTimeTo[1].toInt() > 59 || partsTimeFrom[0].toInt() * 60 + partsTimeFrom[1].toInt() >
+                partsTimeTo[0].toInt() * 60 + partsTimeTo[1].toInt()) {
+            throw IllegalArgumentException("Нарушение формата строки (Time)")
+        }
+
+        val timeInt = (partsTimeTo[0].toInt() * 60 + partsTimeTo[1].toInt()) -
+                (partsTimeFrom[0].toInt() * 60 + partsTimeFrom[1].toInt())
+        val hours = timeInt / 60
+        val minute = timeInt % 60
+
+        if (hours > 0) {
+            time += String.format("%d%s",hours, timeHoursToString(hours))
+        }
+
+        time += String.format("%02d%s",minute, timeMinuteToString(minute))
+    }
+    catch (e: KotlinNullPointerException){
+        return "Неверно указаны(-а) странции(-я)"
+    }
+    catch (e: NumberFormatException) {
+        return "Нарушение формата строки"
+    }
+    return time
+}
