@@ -181,6 +181,9 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 7 8 9      9 6 3
  */
 fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
+    if (matrix.height != matrix.width) {
+        throw IllegalArgumentException()
+    }
     val result = matrix
     for (i in 0 until matrix.width) {
         for (j in 0 until matrix.width) {
@@ -211,6 +214,9 @@ fun isLatinSquare(matrix: Matrix<Int>): Boolean {
     for (i in 0 until sizeLine) {
         var value = 1
         for (j in 0 until sizeLine) {
+            if (matrix[i,j] == Int.MAX_VALUE) {
+                return false
+            }
             value *= matrix[i,j]
         }
         if (value != factorial(matrix.height).toInt()){
