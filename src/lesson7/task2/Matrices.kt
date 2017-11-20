@@ -1,6 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson7.task2
 
+import lesson3.task1.factorial
 import lesson7.task1.Matrix
 import lesson7.task1.createMatrix
 
@@ -60,9 +61,9 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  *  9  8  7  6
  */
 fun generateSpiral(height: Int, width: Int): Matrix<Int> {
-    val result = createMatrix(height,width,0)
+    val result = createMatrix(height, width, 0)
     var count = 1
-    val circle = Math.max(height,width)/2
+    val circle = Math.max(height, width) / 2
     for (i in 0..circle) {
         for (j in 0 until width) {
             if (result[i, j] == 0) {
@@ -87,7 +88,7 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
         var count2 = 0
         for (o in 0 until height) {
             for (j in 0 until width) {
-                if (result[o,j] == 0) {
+                if (result[o, j] == 0) {
                     count2++
                 }
             }
@@ -114,9 +115,9 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
  *  1  1  1  1  1  1
  */
 fun generateRectangles(height: Int, width: Int): Matrix<Int> {
-    val result = createMatrix(height,width,0)
+    val result = createMatrix(height, width, 0)
     var count = 1
-    val circle = Math.max(height,width)/2
+    val circle = Math.max(height, width) / 2
     for (i in 0..circle) {
         for (j in 0 until height) {
             if (result[j, i] == 0) {
@@ -142,7 +143,7 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> {
         var count2 = 0
         for (o in 0 until height) {
             for (j in 0 until width) {
-                if (result[o,j] == 0) {
+                if (result[o, j] == 0) {
                     count2++
                 }
             }
@@ -179,7 +180,15 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
+    val result = matrix
+    for (i in 0 until matrix.width) {
+        for (j in 0 until matrix.width) {
+            result[i,j] = matrix[matrix.width - j, i]
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -194,7 +203,31 @@ fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
  * 1 2 3
  * 3 1 2
  */
-fun isLatinSquare(matrix: Matrix<Int>): Boolean = TODO()
+fun isLatinSquare(matrix: Matrix<Int>): Boolean {
+    if (matrix.height != matrix.width) {
+        return false
+    }
+    val sizeLine = matrix.height
+    for (i in 0 until sizeLine) {
+        var value = 1
+        for (j in 0 until sizeLine) {
+            value *= matrix[i,j]
+        }
+        if (value != factorial(matrix.height).toInt()){
+            return false
+        }
+    }
+    for (i in 0 until sizeLine) {
+        var value = 1
+        for (j in 0 until sizeLine) {
+            value *= matrix[j,i]
+        }
+        if (value != factorial(matrix.height).toInt()){
+            return false
+        }
+    }
+    return true
+}
 
 /**
  * Средняя
