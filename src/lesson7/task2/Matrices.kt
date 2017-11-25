@@ -184,6 +184,9 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> {
         for (p in i downTo 0) {
             result[p, widthS] = count++
             widthS++
+            if (widthS > width - 1) {
+                break
+            }
         }
         widthS = 0
     }
@@ -200,18 +203,7 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> {
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
-    if (matrix.height != matrix.width) {
-        throw IllegalArgumentException()
-    }
-    val result = matrix
-    for (i in 0 until matrix.width) {
-        for (j in 0 until matrix.width) {
-            result[matrix.width - j - 1, i] = matrix[i, j]
-        }
-    }
-    return result
-}
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
 
 /**
  * Сложная
@@ -361,6 +353,7 @@ fun sumSubMatrix(matrix: Matrix<Int>): Matrix<Int> {
     val result = createMatrix(matrix.height, matrix.width, 0)
     for (i in 0 until matrix.width) {
         for (j in 0 until matrix.height) {
+            result [j, i] = 0
             for (k in 0..i){
                 for (p in 0..j){
                     result [j, i] += matrix[p, k]
@@ -458,30 +451,7 @@ operator fun Matrix<Int>.times(other: Matrix<Int>): Matrix<Int> {
  * 0  4 13  6
  * 3 10 11  8
  */
-fun fifteenGameMoves(matrix: Matrix<Int>, moves: List<Int>): Matrix<Int> {
-    val movesHole = listOf(Pair(0, 1), Pair(0, -1), Pair(1, 0), Pair(-1, 0))
-    for (i in 0 until moves.size) {
-        if (moves[i] in 1..15) {
-            for (k in 0 until matrix.height) {
-                for (j in 0 until matrix.width) {
-                    if (matrix[k, j] == 0) {
-                        for ((first, second) in movesHole) {
-                            if (k + first < 0 || k + first > matrix.height - 1 || j + second < 0 || j + second > matrix.width - 1) {
-                                continue
-                            } else if (matrix[k + first, j + second] == moves[i]) {
-                                matrix[k, j] = matrix[k + first, j + second]
-                                matrix[k + first, j + second] = 0
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-           throw IllegalStateException()
-        }
-    }
-    return matrix
-}
+fun fifteenGameMoves(matrix: Matrix<Int>, moves: List<Int>): Matrix<Int> = TODO()
 
 /**
  * Очень сложная
