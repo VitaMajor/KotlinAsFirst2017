@@ -343,7 +343,7 @@ fun knightMoveNumber(start: Square, end: Square): Int {
         val g = Graph()
         for (i in 1..8) {
             for (j in 1..8){
-                g.addVertex(String.format("%s%s",i.toString(),j.toString()))
+                g.addVertex(String.format("%d%d", i, j))
             }
         }
         for (i in 1..8) {
@@ -355,24 +355,20 @@ fun knightMoveNumber(start: Square, end: Square): Int {
                 val rowUp2 = j + 2
                 val rowDown2 = j - 2
                 if ((column2 in 1..8 && rowUp1 in 1..8 )){
-                    g.connect(String.format("%s%s",i.toString(),j.toString()),
-                            String.format("%s%s",column2.toString(),rowUp1.toString()))
+                    g.connect(String.format("%d%d", i, j), String.format("%d%d", column2, rowUp1))
                 }
                 if ((column2 in 1..8 && rowDown1 in 1..8 )){
-                    g.connect(String.format("%s%s",i.toString(),j.toString()),
-                            String.format("%s%s",column2.toString(),rowDown1.toString()))
+                    g.connect(String.format("%d%d", i, j), String.format("%d%d", column2, rowDown1))
                 }
                 if ((column1 in 1..8 && rowUp2 in 1..8 )){
-                    g.connect(String.format("%s%s",i.toString(),j.toString()),
-                            String.format("%s%s",column1.toString(),rowUp2.toString()))
+                    g.connect(String.format("%d%d", i, j), String.format("%d%d", column1,rowUp2))
                 }
                 if ((column1 in 1..8 && rowDown2 in 1..8 )){
-                    g.connect(String.format("%s%s",i.toString(),j.toString()),
-                            String.format("%s%s",column1.toString(),rowDown2.toString()))
+                    g.connect(String.format("%d%d", i, j), String.format("%d%d", column1, rowDown2))
                 }
             }
         }
-        return g.bfs(String.format("%s%s",start.column.toString(),start.row.toString()),String.format("%s%s",end.column.toString(),end.row.toString()))
+        return g.bfs(String.format("%d%d", start.column, start.row), String.format("%d%d", end.column, end.row))
     }
     throw IllegalArgumentException()
 }
@@ -405,7 +401,7 @@ fun knightTrajectory(start: Square, end: Square): List<Square> {
         val g = Graph()
         for (i in 1..8) {
             for (j in 1..8){
-                g.addVertex(String.format("%s%s",i.toString(),j.toString()))
+                g.addVertex(String.format("%d%d", i, j))
             }
         }
         for (i in 1..8) {
@@ -417,100 +413,34 @@ fun knightTrajectory(start: Square, end: Square): List<Square> {
                 val rowUp2 = j + 2
                 val rowDown2 = j - 2
                 if ((column2 in 1..8 && rowUp1 in 1..8 )){
-                    g.connect(String.format("%s%s",i.toString(),j.toString()),
-                            String.format("%s%s",column2.toString(),rowUp1.toString()))
+                    g.connect(String.format("%d%d", i, j), String.format("%d%d", column2, rowUp1))
                 }
                 if ((column2 in 1..8 && rowDown1 in 1..8 )){
-                    g.connect(String.format("%s%s",i.toString(),j.toString()),
-                            String.format("%s%s",column2.toString(),rowDown1.toString()))
+                    g.connect(String.format("%d%d", i, j), String.format("%d%d", column2, rowDown1))
                 }
                 if ((column1 in 1..8 && rowUp2 in 1..8 )){
-                    g.connect(String.format("%s%s",i.toString(),j.toString()),
-                            String.format("%s%s",column1.toString(),rowUp2.toString()))
+                    g.connect(String.format("%d%d", i, j), String.format("%d%d", column1,rowUp2))
                 }
                 if ((column1 in 1..8 && rowDown2 in 1..8 )){
-                    g.connect(String.format("%s%s",i.toString(),j.toString()),
-                            String.format("%s%s",column1.toString(),rowDown2.toString()))
+                    g.connect(String.format("%d%d", i, j), String.format("%d%d", column1, rowDown2))
                 }
             }
         }
-        var movesCount = g.bfs(String.format("%s%s",start.column.toString(),start.row.toString()),
-                String.format("%s%s",end.column.toString(),end.row.toString()))
+        val movesKnight = listOf(Pair(1, 2), Pair(1, -2), Pair(-1, 2), Pair(-1, -2), Pair(2, 1), Pair(2, -1),
+                Pair(-2, 1), Pair(-2, -1))
+        val moveEndString = String.format("%d%d", end.column, end.row)
+        var movesCount = g.bfs(String.format("%d%d", start.column, start.row), moveEndString)
         var moveSquare = Square(start.column, start.row)
-        var moveString = String.format("%s%s", start.column.toString(), start.row.toString())
-        val moveEnd = String.format("%s%s",end.column.toString(),end.row.toString())
         while (movesCount != 0) {
-            if (Square(moveSquare.column - 1,moveSquare.row - 2).inside() && g.bfs(moveString,
-                    String.format("%s%s", (moveSquare.column - 1).toString(), (moveSquare.row - 2).toString())) == 1
-                    && g.bfs(String.format("%s%s",(moveSquare.column - 1).toString(),
-                    (moveSquare.row - 2).toString()),moveEnd) == movesCount - 1) {
-                movesCount--
-                moveSquare = Square(moveSquare.column - 1, moveSquare.row - 2)
-                moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
-                moves.add(moveSquare)
-            }
-            if (Square(moveSquare.column - 2,moveSquare.row - 1).inside() && g.bfs(moveString,
-                    String.format("%s%s", (moveSquare.column - 2).toString(), (moveSquare.row - 1).toString())) == 1
-                    && g.bfs(String.format("%s%s",(moveSquare.column - 2).toString(),
-                    (moveSquare.row - 1).toString()),moveEnd) == movesCount - 1) {
-                movesCount--
-                moveSquare = Square(moveSquare.column - 2, moveSquare.row - 1)
-                moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
-                moves.add(moveSquare)
-            }
-            if ( Square(moveSquare.column - 2,moveSquare.row + 1).inside() && g.bfs(moveString,
-                    String.format("%s%s", (moveSquare.column - 2).toString(), (moveSquare.row + 1).toString())) == 1
-                    && g.bfs(String.format("%s%s",(moveSquare.column - 2).toString(),
-                    (moveSquare.row + 1).toString()),moveEnd) == movesCount - 1) {
-                movesCount--
-                moveSquare = Square(moveSquare.column - 2, moveSquare.row + 1)
-                moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
-                moves.add(moveSquare)
-            }
-            if (Square(moveSquare.column + 1,moveSquare.row - 2).inside() && g.bfs(moveString,
-                    String.format("%s%s", (moveSquare.column + 1).toString(), (moveSquare.row - 2).toString())) == 1
-                    && g.bfs(String.format("%s%s",(moveSquare.column + 1).toString(),
-                    (moveSquare.row - 2).toString()),moveEnd) == movesCount - 1) {
-                movesCount--
-                moveSquare = Square(moveSquare.column + 1, moveSquare.row - 2)
-                moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
-                moves.add(moveSquare)
-            }
-            if (Square(moveSquare.column + 1,moveSquare.row + 2).inside() && g.bfs(moveString,
-                    String.format("%s%s", (moveSquare.column + 1).toString(), (moveSquare.row + 2).toString())) == 1
-                    && g.bfs(String.format("%s%s",(moveSquare.column + 1).toString(),
-                    (moveSquare.row + 2).toString()),moveEnd) == movesCount - 1) {
-                movesCount--
-                moveSquare = Square(moveSquare.column + 1, moveSquare.row + 2)
-                moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
-                moves.add(moveSquare)
-            }
-            if (Square(moveSquare.column + 2,moveSquare.row - 1).inside() && g.bfs(moveString,
-                    String.format("%s%s", (moveSquare.column + 2).toString(), (moveSquare.row - 1).toString())) == 1
-                    && g.bfs(String.format("%s%s",(moveSquare.column + 2).toString(),
-                    (moveSquare.row - 1).toString()),moveEnd) == movesCount - 1) {
-                movesCount--
-                moveSquare = Square(moveSquare.column + 2, moveSquare.row - 1)
-                moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
-                moves.add(moveSquare)
-            }
-            if (Square(moveSquare.column + 2,moveSquare.row + 1).inside() && g.bfs(moveString,
-                    String.format("%s%s", (moveSquare.column + 2).toString(), (moveSquare.row + 1).toString())) == 1
-                    && g.bfs(String.format("%s%s",(moveSquare.column + 2).toString(),
-                    (moveSquare.row + 1).toString()),moveEnd) == movesCount - 1) {
-                movesCount--
-                moveSquare = Square(moveSquare.column + 2, moveSquare.row + 1)
-                moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
-                moves.add(moveSquare)
-            }
-            if (Square(moveSquare.column - 1,moveSquare.row + 2).inside() && g.bfs(moveString,
-                    String.format("%s%s", (moveSquare.column - 1).toString(), (moveSquare.row + 2).toString())) == 1
-                    && g.bfs(String.format("%s%s",(moveSquare.column - 1).toString(),
-                    (moveSquare.row + 2).toString()),moveEnd) == movesCount - 1) {
-                movesCount--
-                moveSquare = Square(moveSquare.column - 1, moveSquare.row + 2)
-                moveString = String.format("%s%s", moveSquare.column.toString(), moveSquare.row.toString())
-                moves.add(moveSquare)
+            for ((first, second) in movesKnight) {
+                val moveProbable = Square(moveSquare.column + first, moveSquare.row + second)
+                if (moveProbable.inside() &&
+                        g.bfs(String.format("%d%d", moveSquare.column + first, moveSquare.row + second), moveEndString)
+                                == movesCount - 1) {
+                    movesCount--
+                    moveSquare = moveProbable
+                    moves.add(moveSquare)
+                }
             }
         }
         return moves
