@@ -176,6 +176,9 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> {
         for (p in i downTo 0) {
             result[heightS, p] = count++
             heightS++
+            if (heightS > height - 1) {
+                break
+            }
         }
         heightS = 0
     }
