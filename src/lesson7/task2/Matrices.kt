@@ -182,16 +182,16 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> {
         }
         heightS = 0
     }
-    var widthS = 0
+    var widthS = width - 1
     for (i in 1 until height) {
         for (p in i downTo 0) {
             result[p, widthS] = count++
-            widthS++
-            if (widthS > width - 1) {
+            widthS--
+            if (widthS < 0) {
                 break
             }
         }
-        widthS = 0
+        widthS = width - 1
     }
     return result
 }
