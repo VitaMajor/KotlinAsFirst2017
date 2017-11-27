@@ -90,9 +90,9 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  */
 fun sibilants(inputName: String, outputName: String) {
     val trueLetter = listOf("жИ","шИ","чА","щА","чУ","щУ","жи","ши","ча",
-            "ща","чу","щу","жА","жа","жУ","жу","шА","ша","шУ","шу")
+            "ща","чу","щу","жА","жа","жУ","жу","шА","ша","шУ","шу","чИ","чи")
     val falseLetter = listOf("жЫ","шЫ","чЯ","щЯ","чЮ","щЮ","жы","шы","чя",
-            "щя","чю","щю","жЯ","жя","жЮ","жю","шЯ","шя","шЮ","шю")
+            "щя","чю","щю","жЯ","жя","жЮ","жю","шЯ","шя","шЮ","шю","чЫ","чи")
     val outputStream = File(outputName).bufferedWriter()
     for (line in File(inputName).readLines()) {
         val words = line.split(" ")
