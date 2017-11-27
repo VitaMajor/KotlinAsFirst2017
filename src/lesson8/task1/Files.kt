@@ -53,7 +53,29 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    val map = mutableMapOf<String, Int>()
+    var count = 0
+    for (i in 0 until substrings.size) {
+        for (line in File(inputName).readLines()) {
+            for (word in line.split(" ")) {
+                if (substrings[i].length == 1) {
+                    for (char in word) {
+                        if (substrings[i].toLowerCase() == char.toLowerCase().toString()) {
+                            count++
+                        }
+                    }
+                }
+                else if (word.toLowerCase().indexOf(substrings[i].toLowerCase(), 0) != -1) {
+                    count++
+                }
+            }
+        }
+        map.put(substrings[i], count)
+        count = 0
+    }
+    return map
+}
 
 
 /**
@@ -70,7 +92,33 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val trueLetter = listOf("жИ","шИ","чА","щА","чУ","щУ","жи","ши","ча","ща","чу","щу","жА","жа","жУ","жу","шА","ша","шУ","шу")
+    val falseLetter = listOf("жЫ","шЫ","чЯ","щЯ","чЮ","щЮ","жы","шы","чя","щя","чю","щю","жЯ","жя","жЮ","жю","шЯ","шя","шЮ","шю")
+    val outputStream = File(outputName).bufferedWriter()
+    for (line in File(inputName).readLines()) {
+        val words = line.split(" ")
+        for (k in 0 until words.size) {
+            var wordW = words[k]
+            for (i in 1 until words[k].length) {
+                for (j in 0 until falseLetter.size) {
+                    if (words[k][i - 1].toLowerCase().toString() + words[k][i] == falseLetter[j]) {
+                        val c = words[k].toCharArray()
+                        c[i] = trueLetter[j][1]
+                        wordW = String(c)
+                    }
+                }
+            }
+            if (k == words.size - 1) {
+                outputStream.write(wordW)
+            }
+            else {
+                outputStream.write(wordW)
+                outputStream.write(" ")
+            }
+        }
+        outputStream.newLine()
+    }
+    outputStream.close()
 }
 
 /**
