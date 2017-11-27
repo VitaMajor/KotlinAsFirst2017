@@ -59,15 +59,12 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     for (i in 0 until substrings.size) {
         for (line in File(inputName).readLines()) {
             for (word in line.split(" ")) {
-                if (substrings[i].length == 1) {
-                    for (char in word) {
-                        if (substrings[i].toLowerCase() == char.toLowerCase().toString()) {
-                            count++
-                        }
-                    }
-                }
-                else if (word.toLowerCase().indexOf(substrings[i].toLowerCase(), 0) != -1) {
+                var position = 0
+                var indexOfSubstring = word.toLowerCase().indexOf(substrings[i].toLowerCase(),position)
+                while (indexOfSubstring != -1) {
                     count++
+                    position = indexOfSubstring + 1
+                    indexOfSubstring = word.toLowerCase().indexOf(substrings[i].toLowerCase(),position)
                 }
             }
         }
@@ -92,8 +89,10 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    val trueLetter = listOf("жИ","шИ","чА","щА","чУ","щУ","жи","ши","ча","ща","чу","щу","жА","жа","жУ","жу","шА","ша","шУ","шу")
-    val falseLetter = listOf("жЫ","шЫ","чЯ","щЯ","чЮ","щЮ","жы","шы","чя","щя","чю","щю","жЯ","жя","жЮ","жю","шЯ","шя","шЮ","шю")
+    val trueLetter = listOf("жИ","шИ","чА","щА","чУ","щУ","жи","ши","ча",
+            "ща","чу","щу","жА","жа","жУ","жу","шА","ша","шУ","шу")
+    val falseLetter = listOf("жЫ","шЫ","чЯ","щЯ","чЮ","щЮ","жы","шы","чя",
+            "щя","чю","щю","жЯ","жя","жЮ","жю","шЯ","шя","шЮ","шю")
     val outputStream = File(outputName).bufferedWriter()
     for (line in File(inputName).readLines()) {
         val words = line.split(" ")
@@ -102,7 +101,7 @@ fun sibilants(inputName: String, outputName: String) {
             for (i in 1 until words[k].length) {
                 for (j in 0 until falseLetter.size) {
                     if (words[k][i - 1].toLowerCase().toString() + words[k][i] == falseLetter[j]) {
-                        val c = words[k].toCharArray()
+                        val c = wordW.toCharArray()
                         c[i] = trueLetter[j][1]
                         wordW = String(c)
                     }
